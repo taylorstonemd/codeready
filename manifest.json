@@ -1,0 +1,16 @@
+{
+  "name": "CodeReady — Emergency Protocols",
+  "short_name": "CodeReady",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#FBFCFD",
+  "theme_color": "#0E7C7B",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='110' fill='%230E7C7B'/%3E%3Cpath d='M85 270h80l34-96 57 176 40-120 28 40h103' stroke='white' stroke-width='28' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

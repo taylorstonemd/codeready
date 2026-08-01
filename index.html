@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<title>CodeReady — Emergency Protocols</title>
+<meta name="description" content="ACLS, PALS, ATLS, ACR contrast reaction, and moderate sedation education and quick reference.">
+<!-- iOS PWA -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="CodeReady">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' rx='40' fill='%230E7C7B'/%3E%3Cpath d='M30 95h28l12-34 20 62 14-42 10 14h36' stroke='white' stroke-width='10' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<meta name="theme-color" content="#0E7C7B">
+<style>
+:root{
+  --paper:#FBFCFD; --card:#FFFFFF; --ink:#0F1B2D; --slate:#5B6B7C; --line:#E3E8ED;
+  --teal:#0E7C7B; --teal-soft:#E4F2F1; --red:#B8232F; --red-soft:#FBEAEC; --red-deep:#8E1620;
+  --amber:#C77700; --amber-soft:#FCF1DF; --blue:#2563EB; --blue-soft:#E8EFFD;
+  --green:#157A3C; --green-soft:#E6F4EB;
+  --mono:ui-monospace,'SF Mono',SFMono-Regular,Menlo,monospace;
+  --sans:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+  --r:14px; --tabbar:calc(64px + env(safe-area-inset-bottom));
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{height:100%}
+body{font-family:var(--sans);background:var(--paper);color:var(--ink);min-height:100%;
+  font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased;overscroll-behavior-y:none}
+#app{max-width:680px;margin:0 auto;padding:calc(14px + env(safe-area-inset-top)) 16px var(--tabbar)}
+h1{font-size:26px;font-weight:800;letter-spacing:-.02em}
+h2{font-size:19px;font-weight:800;letter-spacing:-.01em;margin:22px 0 10px}
+h3{font-size:16px;font-weight:700;margin:14px 0 6px}
+p{margin:6px 0}
+button{font-family:inherit;border:none;cursor:pointer;background:none;font-size:inherit;color:inherit}
+.brand{display:flex;align-items:baseline;gap:8px;margin-bottom:2px}
+.brand .dot{width:10px;height:10px;border-radius:3px;background:var(--teal);align-self:center}
+.sub{color:var(--slate);font-size:13.5px;margin-bottom:14px}
+/* ---- cards / chips ---- */
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px;margin:10px 0}
+.tag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+  padding:3px 8px;border-radius:6px;background:var(--teal-soft);color:var(--teal)}
+.tag.red{background:var(--red-soft);color:var(--red)}
+.tag.amber{background:var(--amber-soft);color:var(--amber)}
+.tag.blue{background:var(--blue-soft);color:var(--blue)}
+.tag.green{background:var(--green-soft);color:var(--green)}
+.dose{font-family:var(--mono);font-size:14px;font-weight:600;background:var(--blue-soft);color:#1E3A8A;
+  padding:1px 6px;border-radius:5px;white-space:nowrap}
+.warn{background:var(--amber-soft);border:1px solid #EBD3A8;border-radius:10px;padding:10px 12px;font-size:14px;margin:8px 0}
+.crit{background:var(--red-soft);border:1px solid #ECC4C8;border-radius:10px;padding:10px 12px;font-size:14px;margin:8px 0}
+ul,ol{padding-left:20px;margin:6px 0}
+li{margin:4px 0}
+table{width:100%;border-collapse:collapse;font-size:14px;margin:8px 0}
+th,td{border:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}
+th{background:#F2F5F7;font-weight:700}
+/* ---- tab bar ---- */
+nav{position:fixed;bottom:0;left:0;right:0;background:rgba(255,255,255,.96);backdrop-filter:blur(12px);
+  border-top:1px solid var(--line);display:flex;justify-content:space-around;
+  padding:6px 4px calc(6px + env(safe-area-inset-bottom));z-index:50;max-width:680px;margin:0 auto}
+nav button{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:4px 0;
+  font-size:10.5px;font-weight:600;color:var(--slate);border-radius:10px}
+nav button.on{color:var(--teal)}
+nav button.em{color:var(--red)}
+nav button svg{width:24px;height:24px}
+/* ---- home grid ---- */
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px 14px;
+  text-align:left;display:flex;flex-direction:column;gap:6px;min-height:96px}
+.tile b{font-size:15.5px}
+.tile span{font-size:12.5px;color:var(--slate);line-height:1.35}
+.tile:active{background:#F2F5F7}
+/* ---- buttons ---- */
+.btn{display:block;width:100%;text-align:center;padding:13px;border-radius:12px;font-weight:700;font-size:15.5px;margin:8px 0}
+.btn.primary{background:var(--teal);color:#fff}
+.btn.ghost{background:#fff;border:1.5px solid var(--line);color:var(--ink)}
+.btn.danger{background:var(--red);color:#fff}
+.btn:active{opacity:.85}
+.row{display:flex;gap:8px}
+.row .btn{flex:1}
+.back{display:inline-flex;align-items:center;gap:4px;color:var(--teal);font-weight:700;font-size:14.5px;padding:6px 0;margin-bottom:4px}
+/* ---- emergency mode ---- */
+.em-wrap{position:fixed;inset:0;background:#1C0B0D;color:#fff;z-index:100;overflow-y:auto;
+  padding:calc(14px + env(safe-area-inset-top)) 16px calc(20px + env(safe-area-inset-bottom))}
+.em-wrap .inner{max-width:680px;margin:0 auto}
+.em-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.em-title{font-size:20px;font-weight:800;letter-spacing:.02em}
+.em-close{background:rgba(255,255,255,.14);color:#fff;font-weight:700;padding:8px 16px;border-radius:10px;font-size:14px}
+.em-btn{display:block;width:100%;text-align:left;background:#3A1418;border:1px solid #6B2127;color:#fff;
+  border-radius:14px;padding:16px;margin:8px 0;font-size:17px;font-weight:800}
+.em-btn small{display:block;font-weight:500;font-size:13px;color:#E8AFAF;margin-top:2px}
+.em-btn:active{background:#52191F}
+.em-card{background:#2A1013;border:1px solid #5A1C22;border-radius:14px;padding:14px;margin:10px 0}
+.em-card h3{color:#FF9D9D;font-size:13px;text-transform:uppercase;letter-spacing:.08em;margin:0 0 8px}
+.em-card li{margin:7px 0;font-size:15.5px}
+.em-card .dose{background:#fff;color:#8E1620;font-weight:700}
+.em-step{display:flex;gap:10px;margin:10px 0;font-size:15.5px}
+.em-step .n{flex:none;width:26px;height:26px;border-radius:8px;background:#fff;color:var(--red-deep);
+  font-weight:800;display:flex;align-items:center;justify-content:center;font-size:14px}
+.wt-bar{display:flex;align-items:center;gap:8px;background:#2A1013;border:1px solid #5A1C22;border-radius:12px;padding:10px 12px;margin:8px 0}
+.wt-bar input{width:70px;background:#fff;border:none;border-radius:8px;padding:8px;font-size:16px;font-weight:700;text-align:center;font-family:var(--mono)}
+.wt-bar label{font-size:13.5px;color:#E8AFAF;font-weight:600}
+.calc{font-family:var(--mono);color:#FFD3D3;font-size:13.5px}
+/* ---- NIHSS ---- */
+.nih-score{position:sticky;top:0;z-index:5;display:flex;align-items:center;gap:12px;
+  background:#fff;color:var(--red-deep);border-radius:12px;padding:10px 14px;margin:8px 0;
+  box-shadow:0 4px 14px rgba(0,0,0,.4)}
+.nih-score b{font-family:var(--mono);font-size:28px;font-weight:800}
+.nih-score span{font-size:13px;font-weight:600;line-height:1.3}
+.nih-opts{display:flex;flex-direction:column;gap:6px}
+.nih-opt{text-align:left;background:#3A1418;border:1px solid #6B2127;color:#F3D9D9;
+  border-radius:9px;padding:9px 11px;font-size:14px;line-height:1.35}
+.nih-opt.on{background:#fff;border-color:#fff;color:var(--red-deep);font-weight:700}
+.nih-opt:active{opacity:.8}
+/* ---- flashcards ---- */
+.fc-stage{perspective:1200px;margin:14px 0}
+.fc{position:relative;width:100%;min-height:240px;transform-style:preserve-3d;transition:transform .45s}
+.fc.flip{transform:rotateY(180deg)}
+.fc-face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;
+  background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px;
+  display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;gap:10px}
+.fc-face.b{transform:rotateY(180deg);background:#F4FAF9;border-color:#C8E2E0}
+.fc-face .q{font-size:18px;font-weight:700;line-height:1.4}
+.fc-face .a{font-size:16px;line-height:1.5}
+.fc-meta{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--slate);margin:6px 2px}
+.pillrow{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}
+.pill{padding:7px 12px;border-radius:999px;border:1.5px solid var(--line);background:#fff;font-size:13px;font-weight:600;color:var(--slate)}
+.pill.on{background:var(--teal);border-color:var(--teal);color:#fff}
+/* ---- scenarios ---- */
+.vitals{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:8px 0}
+.vt{background:#0F1B2D;color:#fff;border-radius:10px;padding:8px;text-align:center}
+.vt b{font-family:var(--mono);font-size:16px;display:block}
+.vt span{font-size:10.5px;color:#9FB0C3;text-transform:uppercase;letter-spacing:.05em}
+.opt{display:block;width:100%;text-align:left;background:#fff;border:1.5px solid var(--line);
+  border-radius:12px;padding:13px 14px;margin:7px 0;font-size:15px;line-height:1.4}
+.opt:active{background:#F2F5F7}
+.opt.right{border-color:var(--green);background:var(--green-soft)}
+.opt.wrong{border-color:var(--red);background:var(--red-soft)}
+.fb{border-radius:10px;padding:10px 12px;font-size:14px;margin:8px 0}
+.fb.good{background:var(--green-soft);border:1px solid #BCDCC7}
+.fb.bad{background:var(--red-soft);border:1px solid #ECC4C8}
+.progress{height:5px;background:var(--line);border-radius:99px;margin:8px 0;overflow:hidden}
+.progress i{display:block;height:100%;background:var(--teal);border-radius:99px;transition:width .3s}
+.hidden{display:none}
+footer.note{font-size:11.5px;color:var(--slate);margin:24px 0 8px;line-height:1.5}
+@media (prefers-reduced-motion:reduce){.fc{transition:none}}
+</style>
+</head>
+<body>
+<div id="app"></div>
+
+<nav id="tabbar">
+  <button data-tab="learn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19V5a2 2 0 012-2h13v16H6a2 2 0 00-2 2zm0 0a2 2 0 002 2h13"/></svg>Learn</button>
+  <button data-tab="train"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h4l3-8 4 16 3-8h4"/></svg>Train</button>
+  <button data-tab="cards"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="6" width="14" height="14" rx="2"/><path d="M7 6V5a2 2 0 012-2h10a2 2 0 012 2v11a2 2 0 01-2 2h-1"/></svg>Cards</button>
+  <button data-tab="quick" class="em"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M13 2L4 14h6l-1 8 9-12h-6l1-8z"/></svg>Quick Ref</button>
+</nav>
+
+<script>
+/* =========================================================
+   CodeReady — single-file PWA
+   Education + quick reference: ACLS / PALS / ATLS /
+   ACR contrast reactions / moderate sedation
+   ========================================================= */
+"use strict";
+
+/* ---------- tiny safe storage (works deployed; silent in sandboxed previews) ---------- */
+const store={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},
+set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+
+const $=s=>document.querySelector(s);
+const app=$("#app");
+const esc=s=>s.replace(/&/g,"&amp;").replace(/</g,"&lt;");
+const D=s=>`<span class="dose">${s}</span>`; // dose chip
+
+/* =========================================================
+   LEARN CONTENT
+   ========================================================= */
+const LEARN={
+acls:{name:"ACLS",tag:"teal",blurb:"Adult cardiac arrest, bradycardia, tachycardia, post-ROSC (AHA 2020).",
+sections:[
+{t:"Adult Cardiac Arrest (VF / pVT)",h:`
+<p><b>Shockable rhythms.</b> Survival hinges on high-quality CPR and early defibrillation.</p>
+<ol>
+<li>Start CPR — rate ${D("100–120/min")}, depth ${D("2–2.4 in (5–6 cm)")}, full recoil, minimize pauses (&lt;10 s).</li>
+<li>Attach defibrillator. <b>Shock</b>: biphasic ${D("120–200 J")} (per device; max if unknown).</li>
+<li>CPR 2 min → rhythm check → shock if still VF/pVT.</li>
+<li><b>Epinephrine</b> ${D("1 mg IV/IO q3–5 min")} after the 2nd shock.</li>
+<li><b>Amiodarone</b> ${D("300 mg IV bolus")}, repeat ${D("150 mg")} once — or <b>lidocaine</b> ${D("1–1.5 mg/kg")}, then ${D("0.5–0.75 mg/kg")}.</li>
+<li>Advanced airway → continuous compressions + 1 breath q6 s; waveform capnography (target ETCO₂ &gt;10, ideally &gt;20 mmHg).</li>
+</ol>
+<div class="warn"><b>Reversible causes — Hs &amp; Ts:</b> Hypovolemia, Hypoxia, H⁺ (acidosis), Hypo/Hyperkalemia, Hypothermia · Tension pneumothorax, Tamponade, Toxins, Thrombosis (PE), Thrombosis (MI).</div>`},
+{t:"Adult Cardiac Arrest (Asystole / PEA)",h:`
+<p><b>Non-shockable.</b> CPR + epinephrine ASAP; find and fix the cause.</p>
+<ol>
+<li>CPR immediately; rhythm check q2 min.</li>
+<li><b>Epinephrine</b> ${D("1 mg IV/IO q3–5 min")} — give as early as possible.</li>
+<li>No shocks; no amiodarone. Aggressively work the Hs &amp; Ts (PEA is a "cause" rhythm).</li>
+<li>Narrow-complex PEA → think mechanical (tamponade, tension PTX, PE, hypovolemia). Wide-complex → think metabolic/toxic (hyperK, Na-channel blockade).</li>
+</ol>`},
+{t:"Bradycardia (with pulse)",h:`
+<p>Treat only if <b>symptomatic</b> (hypotension, altered mental status, shock, ischemic chest pain, acute heart failure).</p>
+<ol>
+<li><b>Atropine</b> ${D("1 mg IV q3–5 min, max 3 mg")}.</li>
+<li>If ineffective: <b>transcutaneous pacing</b>, or <b>dopamine</b> ${D("5–20 mcg/kg/min")}, or <b>epinephrine infusion</b> ${D("2–10 mcg/min")}.</li>
+<li>Mobitz II / 3rd-degree block: atropine often fails — move to pacing early; prepare transvenous pacing.</li>
+</ol>`},
+{t:"Tachycardia (with pulse)",h:`
+<p>First question: <b>stable or unstable?</b></p>
+<h3>Unstable → synchronized cardioversion</h3>
+<ul>
+<li>Narrow regular (SVT/flutter): ${D("50–100 J")}</li>
+<li>Narrow irregular (AF): ${D("120–200 J biphasic")}</li>
+<li>Wide regular (VT): ${D("100 J")}</li>
+<li>Consider sedation if time permits; never delay for an unstable patient.</li>
+</ul>
+<h3>Stable</h3>
+<ul>
+<li>Narrow regular: vagal maneuvers → <b>adenosine</b> ${D("6 mg rapid IV push")}, then ${D("12 mg")} → β-blocker / Ca-channel blocker.</li>
+<li>Wide regular (likely VT): <b>amiodarone</b> ${D("150 mg IV over 10 min")} or procainamide; adenosine acceptable if regular + monomorphic.</li>
+<li>Polymorphic VT / torsades: defibrillate if pulseless; <b>magnesium</b> ${D("1–2 g IV")} for torsades.</li>
+</ul>`},
+{t:"Acute Stroke (Suspected)",h:`
+<p><b>Time is brain.</b> Establish <b>last known well (LKW)</b> immediately — every decision keys off it.</p>
+<h3>Recognition</h3>
+<ul><li><b>BE-FAST:</b> Balance, Eyes (vision loss/diplopia), Face droop, Arm drift, Speech, Time. Severity scored by NIHSS.</li>
+<li>Check <b>glucose</b> — hypoglycemia (&lt;60 mg/dL) is the great mimic. Also consider seizure/Todd's, migraine, mass.</li></ul>
+<h3>Acute pathway (AHA stroke chain)</h3>
+<ol>
+<li>Activate stroke team; targets: door-to-CT ≤ ${D("20–25 min")}, door-to-needle ≤ ${D("60 min")} (ideal ≤45).</li>
+<li><b>Non-contrast head CT</b> to exclude hemorrhage; CTA head/neck for LVO ± CT perfusion in extended windows.</li>
+<li>O₂ only if SpO₂ &lt;94%; treat fever and glucose (target 140–180).</li>
+</ol>
+<h3>IV Thrombolysis (no hemorrhage, within window)</h3>
+<ul>
+<li>Window: ${D("≤ 3 h")} from LKW; extended ${D("3–4.5 h")} for selected patients.</li>
+<li><b>Alteplase</b> ${D("0.9 mg/kg (max 90 mg)")} — 10% IV bolus over 1 min, remainder over 60 min. <b>Tenecteplase</b> ${D("0.25 mg/kg (max 25 mg)")} single bolus is an accepted alternative (esp. before thrombectomy).</li>
+<li>BP must be ${D("< 185/110")} before lytics (labetalol ${D("10–20 mg IV")} or nicardipine gtt ${D("5 mg/h, titrate")}); keep ${D("< 180/105")} for 24 h after.</li>
+<li>Key exclusions: hemorrhage on CT, recent major surgery/bleed, anticoagulated (INR &gt;1.7, DOAC &lt;48 h), platelets &lt;100k, prior ICH.</li>
+</ul>
+<h3>Thrombectomy</h3>
+<ul><li>LVO (ICA, M1 ± M2, basilar): endovascular thrombectomy up to ${D("24 h")} from LKW in selected patients (DAWN / DEFUSE-3 imaging criteria). Lytics first if eligible — don't delay transfer.</li></ul>
+<div class="crit"><b>Not a lytic candidate?</b> Permissive hypertension — treat BP only if ${D("> 220/120")} (or other emergency indication). Aggressive lowering worsens penumbral perfusion.</div>
+<div class="warn"><b>Post-lytic deterioration</b> (headache, vomiting, ↓LOC, BP spike) = suspected ICH → stop infusion, stat non-contrast CT, labs (fibrinogen), cryoprecipitate ${D("10 units")} + reverse, neurosurgery consult.</div>`},
+{t:"Post-ROSC Care",h:`
+<ul>
+<li>Airway + ventilation: SpO₂ ${D("92–98%")}, PaCO₂ ${D("35–45 mmHg")}; avoid hyperoxia and hyperventilation.</li>
+<li>BP: keep SBP ${D("> 90 mmHg")} / MAP ${D("> 65 mmHg")} (fluids, vasopressors).</li>
+<li>12-lead ECG → STEMI → emergent cath lab.</li>
+<li>Comatose → targeted temperature management ${D("32–37.5 °C")} for ≥24 h; treat fever.</li>
+<li>Check glucose, electrolytes; avoid prognostication &lt;72 h post-normothermia.</li>
+</ul>`}]},
+
+pals:{name:"PALS",tag:"blue",blurb:"Pediatric arrest, bradycardia, tachycardia — weight-based dosing (AHA 2020).",
+sections:[
+{t:"Pediatric Cardiac Arrest",h:`
+<ol>
+<li>CPR: ${D("100–120/min")}, depth ⅓ AP chest (~${D("4 cm infant, 5 cm child")}); 15:2 with 2 rescuers (30:2 single).</li>
+<li><b>Defibrillation (VF/pVT):</b> ${D("2 J/kg")} → ${D("4 J/kg")} → subsequent ≥4 J/kg, max ${D("10 J/kg")} or adult dose.</li>
+<li><b>Epinephrine</b> ${D("0.01 mg/kg IV/IO (0.1 mL/kg of 0.1 mg/mL)")} q3–5 min — give within 5 min for non-shockable rhythms.</li>
+<li><b>Amiodarone</b> ${D("5 mg/kg bolus")} (may repeat ×2) or <b>lidocaine</b> ${D("1 mg/kg")} for refractory VF/pVT.</li>
+<li>With advanced airway: 1 breath q2–3 s (20–30/min).</li>
+</ol>
+<div class="warn">Pediatric arrest is usually <b>asphyxial</b> — oxygenation and ventilation matter more than in adults.</div>`},
+{t:"Pediatric Bradycardia",h:`
+<ol>
+<li>HR &lt;60 with poor perfusion <b>despite</b> oxygenation/ventilation → <b>start CPR</b>.</li>
+<li><b>Epinephrine</b> ${D("0.01 mg/kg IV/IO q3–5 min")}.</li>
+<li><b>Atropine</b> ${D("0.02 mg/kg")} (max ${D("0.5 mg")}/dose) for increased vagal tone or primary AV block.</li>
+<li>Consider pacing for complete heart block / sinus node dysfunction.</li>
+</ol>`},
+{t:"Pediatric Tachycardia",h:`
+<h3>SVT (infant HR usually &gt;220; child &gt;180, no rate variability, abrupt onset)</h3>
+<ul>
+<li>Vagal maneuvers (ice to face in infants).</li>
+<li><b>Adenosine</b> ${D("0.1 mg/kg rapid IV (max 6 mg)")} → second dose ${D("0.2 mg/kg (max 12 mg)")}.</li>
+<li>Unstable → <b>synchronized cardioversion</b> ${D("0.5–1 J/kg")}, then ${D("2 J/kg")}.</li>
+</ul>
+<h3>Wide-complex (VT with pulse)</h3>
+<ul><li>Unstable → cardioversion. Stable → expert consult; amiodarone ${D("5 mg/kg over 20–60 min")} or procainamide.</li></ul>`},
+{t:"Quick Peds Numbers",h:`
+<table><tr><th>Item</th><th>Value</th></tr>
+<tr><td>Fluid bolus</td><td>${D("10–20 mL/kg")} isotonic crystalloid (10 mL/kg if cardiac concern; reassess)</td></tr>
+<tr><td>Glucose (D10)</td><td>${D("5 mL/kg IV")} for hypoglycemia</td></tr>
+<tr><td>ETT size (cuffed)</td><td>${D("age/4 + 3.5")}</td></tr>
+<tr><td>Weight estimate</td><td>${D("(age × 2) + 8 kg")} (or length-based tape)</td></tr>
+<tr><td>Hypotension (SBP)</td><td>${D("< 70 + (age × 2) mmHg")} (1–10 y)</td></tr></table>`}]},
+
+atls:{name:"ATLS",tag:"amber",blurb:"Primary survey, shock classes, GCS, hemorrhage control (ATLS 10th ed.).",
+sections:[
+{t:"Primary Survey — ABCDE",h:`
+<ol>
+<li><b>A — Airway</b> + cervical spine protection. Talking = patent. GCS ≤8 → definitive airway.</li>
+<li><b>B — Breathing</b>: expose chest; look for tension pneumothorax (→ immediate needle/finger decompression, 5th ICS anterior axillary line), open PTX, flail chest, massive hemothorax.</li>
+<li><b>C — Circulation</b>: control external hemorrhage (direct pressure → tourniquet), 2 large-bore IVs, ${D("1 L warmed crystalloid")} then early blood. Permissive hypotension if no TBI.</li>
+<li><b>D — Disability</b>: GCS, pupils, glucose, lateralizing signs.</li>
+<li><b>E — Exposure</b>: fully undress, prevent hypothermia (warm blankets, warm fluids).</li>
+</ol>
+<div class="crit"><b>Lethal triad:</b> hypothermia + acidosis + coagulopathy — every intervention should avoid feeding it.</div>`},
+{t:"Hemorrhagic Shock Classes",h:`
+<table><tr><th></th><th>I</th><th>II</th><th>III</th><th>IV</th></tr>
+<tr><td>Blood loss</td><td>&lt;15%</td><td>15–30%</td><td>31–40%</td><td>&gt;40%</td></tr>
+<tr><td>HR</td><td>↔</td><td>↑</td><td>↑↑</td><td>↑↑↑</td></tr>
+<tr><td>BP</td><td>↔</td><td>↔</td><td>↓</td><td>↓↓</td></tr>
+<tr><td>Mental status</td><td>Slightly anxious</td><td>Anxious</td><td>Confused</td><td>Lethargic</td></tr>
+<tr><td>Resuscitation</td><td>Crystalloid</td><td>Crystalloid ± blood</td><td>Blood</td><td>Blood + MTP</td></tr></table>
+<ul>
+<li><b>Massive transfusion:</b> balanced ${D("1:1:1")} (plasma : platelets : RBC).</li>
+<li><b>TXA</b> ${D("1 g IV over 10 min")} within 3 h of injury, then ${D("1 g over 8 h")}.</li>
+</ul>`},
+{t:"Glasgow Coma Scale",h:`
+<table><tr><th>Eyes (4)</th><th>Verbal (5)</th><th>Motor (6)</th></tr>
+<tr><td>4 Spontaneous<br>3 To voice<br>2 To pain<br>1 None</td>
+<td>5 Oriented<br>4 Confused<br>3 Inappropriate words<br>2 Sounds<br>1 None</td>
+<td>6 Obeys<br>5 Localizes<br>4 Withdraws<br>3 Flexion<br>2 Extension<br>1 None</td></tr></table>
+<p>Severe TBI ≤8 · Moderate 9–12 · Mild 13–15. Intubate for GCS ≤8.</p>`},
+{t:"Imaging in Trauma (radiologist's corner)",h:`
+<ul>
+<li>eFAST in the bay: pericardium, RUQ, LUQ, pelvis ± lung sliding.</li>
+<li>Hemodynamically <b>unstable + positive FAST</b> → OR, not CT.</li>
+<li>Stable blunt trauma → whole-body CT with IV contrast; arterial + portal venous phases for solid organ/vascular injury grading (AAST).</li>
+<li>CT cystogram for gross hematuria + pelvic fracture; CTA neck per Denver/Memphis criteria for blunt cerebrovascular injury.</li>
+</ul>`}]},
+
+acr:{name:"Contrast Reactions",tag:"red",blurb:"ACR Manual on Contrast Media — recognition, treatment, premedication, extravasation.",
+sections:[
+{t:"Recognize & Classify",h:`
+<table><tr><th>Severity</th><th>Examples</th></tr>
+<tr><td><b>Mild</b></td><td>Limited urticaria/pruritus, nasal congestion, nausea, warmth — self-limited</td></tr>
+<tr><td><b>Moderate</b></td><td>Diffuse urticaria, facial edema without dyspnea, wheezing with normal O₂, isolated hypotension</td></tr>
+<tr><td><b>Severe</b></td><td>Laryngeal edema with stridor, hypoxic bronchospasm, anaphylactic shock, arrest</td></tr></table>
+<p>Most reactions occur within <b>20 minutes</b> of injection. Physiologic (warmth, vasovagal, nausea) ≠ allergic-like.</p>`},
+{t:"Treatment by Reaction (adult)",h:`
+<h3>Urticaria</h3><ul><li>Mild: observation usually suffices. If needed: <b>diphenhydramine</b> ${D("25–50 mg PO/IM/IV")} (warn re: drowsiness/driving) or fexofenadine ${D("180 mg PO")}.</li></ul>
+<h3>Bronchospasm</h3><ul><li>O₂, monitor. β-agonist inhaler (albuterol) ${D("2 puffs (90 mcg/puff)")}, repeat as needed.</li>
+<li>Severe / not responding: <b>epinephrine IM</b> ${D("0.3 mL of 1 mg/mL")} (or IV ${D("1–3 mL of 0.1 mg/mL slowly")} with monitoring).</li></ul>
+<h3>Laryngeal edema (stridor)</h3><ul><li>O₂ by mask, call for help early. <b>Epinephrine IM</b> ${D("0.3 mL of 1 mg/mL")}; repeat q5–15 min as needed (or IV 0.1 mg increments if monitored). No role for antihistamine alone.</li></ul>
+<h3>Hypotension + tachycardia (anaphylactoid)</h3><ul><li>Legs elevated, O₂, rapid IV fluids (${D("1 L NS")}). <b>Epinephrine</b> as above if refractory or severe.</li></ul>
+<h3>Hypotension + bradycardia (vasovagal)</h3><ul><li>Legs up, O₂, IV fluids. Persistent: <b>atropine</b> ${D("0.6–1 mg IV")}, repeat to ${D("3 mg total")}.</li></ul>
+<h3>Hypertensive crisis</h3><ul><li>O₂, monitor; labetalol ${D("20 mg IV")} or nitroglycerin; furosemide if pulmonary edema.</li></ul>
+<h3>Seizure</h3><ul><li>Protect, lateral decubitus, O₂, suction. Persistent: benzodiazepine (midazolam ${D("2–5 mg IV/IM")} or lorazepam ${D("2–4 mg IV")}).</li></ul>
+<h3>Pulmonary edema</h3><ul><li>O₂, head elevated; <b>furosemide</b> ${D("20–40 mg IV")}.</li></ul>
+<div class="crit"><b>Epinephrine pearls:</b> IM lateral thigh is preferred over subQ; IV epinephrine only dilute (0.1 mg/mL) and slow with cardiac monitoring. Repeat doses to a max ~1 mg total while arranging escalation.</div>`},
+{t:"Premedication (prior reactors)",h:`
+<h3>Elective (oral)</h3>
+<ul><li><b>Prednisone</b> ${D("50 mg PO at 13 h, 7 h, 1 h")} before contrast + <b>diphenhydramine</b> ${D("50 mg PO/IM/IV 1 h")} before.</li>
+<li>Alternative: methylprednisolone ${D("32 mg PO at 12 h and 2 h")} ± diphenhydramine.</li></ul>
+<h3>Accelerated (IV, urgent)</h3>
+<ul><li>Methylprednisolone ${D("40 mg IV")} or hydrocortisone ${D("200 mg IV")} q4h until study + diphenhydramine ${D("50 mg IV 1 h")} prior (steroids ideally ≥4–5 h before).</li></ul>
+<div class="warn">Premedication reduces—but does not eliminate—breakthrough reactions; most breakthroughs match the index severity. Have a treatment plan ready.</div>`},
+{t:"Extravasation",h:`
+<ul>
+<li>Stop injection; elevate limb; cold or warm compresses (institutional preference; neither proven superior).</li>
+<li>Most resolve without sequelae. Document volume and site; clinical follow-up before discharge.</li>
+<li><b>Surgical consult if:</b> progressive swelling/pain, blistering or skin ulceration, altered perfusion (cap refill, pulses), worsening paresthesias — concern for <b>compartment syndrome</b>.</li>
+<li>Higher risk: large volume, viscous contrast, hand/foot/ankle sites, fragile veins, altered consciousness.</li>
+</ul>`},
+{t:"Renal & Special Situations",h:`
+<ul>
+<li>Contrast-induced nephropathy risk is lower than historically taught; IV hydration for eGFR ${D("< 30")} (individualize 30–44).</li>
+<li><b>Metformin:</b> eGFR ≥30 and no AKI → no need to hold. eGFR &lt;30 or AKI → hold 48 h, reassess renal function.</li>
+<li>Prior gadolinium reaction does not predict iodinated reaction (and vice versa) — premedicate for the agent class with the index reaction.</li>
+<li>Pregnancy: iodinated contrast may be used when needed; gadolinium only if essential.</li>
+</ul>`}]},
+
+sed:{name:"Moderate Sedation",tag:"green",blurb:"Drugs, monitoring, MOAA/S, reversal agents, pre-procedure assessment.",
+sections:[
+{t:"Definitions & Pre-Procedure",h:`
+<table><tr><th>Level</th><th>Response</th><th>Airway</th></tr>
+<tr><td>Minimal</td><td>Normal to voice</td><td>Unaffected</td></tr>
+<tr><td><b>Moderate</b></td><td>Purposeful to voice/light touch</td><td>No intervention needed</td></tr>
+<tr><td>Deep</td><td>Purposeful after repeated/painful stimulus</td><td>May need support</td></tr>
+<tr><td>GA</td><td>Unarousable</td><td>Often required</td></tr></table>
+<ul>
+<li><b>NPO:</b> clear liquids ${D("2 h")}, light meal ${D("6 h")}, fatty meal ${D("8 h")}.</li>
+<li>Airway exam (Mallampati, neck mobility, dentition), ASA class, OSA screen (STOP-BANG).</li>
+<li>ASA III–IV, difficult airway, severe OSA → consider anesthesiology.</li>
+</ul>`},
+{t:"Drugs & Dosing (adult)",h:`
+<h3>Midazolam</h3>
+<ul><li>${D("0.5–2 mg IV")} over ≥2 min; titrate ${D("q2–5 min")}; typical total 2–5 mg. Reduce in elderly (start ${D("0.5 mg")}) and with opioids.</li></ul>
+<h3>Fentanyl</h3>
+<ul><li>${D("25–50 mcg IV")}; titrate q2–5 min; typical total 50–150 mcg. Synergistic respiratory depression with benzos — titrate one drug at a time.</li></ul>
+<h3>Reversal</h3>
+<ul><li><b>Naloxone</b> (opioid): ${D("0.04–0.4 mg IV")} q2–3 min titrated to respiration (duration shorter than fentanyl — observe for re-sedation ≥2 h).</li>
+<li><b>Flumazenil</b> (benzo): ${D("0.2 mg IV over 15 s")}, repeat q1 min to ${D("1 mg max")}. Avoid in chronic benzo use / seizure history. Observe ≥2 h.</li></ul>
+<div class="warn">If reversal agents are used, extend recovery monitoring — re-sedation outlasts the antagonist.</div>`},
+{t:"Monitoring & MOAA/S",h:`
+<ul>
+<li>Continuous SpO₂ + <b>capnography</b> (detects hypoventilation before desaturation), HR/ECG, BP at least ${D("q5 min")}, level of consciousness.</li>
+<li>Dedicated trained observer; emergency cart + suction + airway equipment + reversal agents in room.</li>
+</ul>
+<table><tr><th>MOAA/S</th><th>Response</th></tr>
+<tr><td>5</td><td>Responds readily to name (normal)</td></tr>
+<tr><td>4</td><td>Lethargic response to name</td></tr>
+<tr><td>3</td><td>Responds after name called loudly/repeatedly</td></tr>
+<tr><td>2</td><td>Responds to mild prodding/shaking</td></tr>
+<tr><td>1</td><td>Responds only to painful stimulus</td></tr>
+<tr><td>0</td><td>No response to pain</td></tr></table>
+<p>Target for moderate sedation: <b>MOAA/S 3–4</b>.</p>`},
+{t:"Rescue & Recovery",h:`
+<ol>
+<li>Apnea/obstruction: stop drugs → stimulate → jaw thrust/chin lift → 100% O₂ → bag-mask → oral/nasal airway → reversal agents → call anesthesia/code.</li>
+<li>Hypotension: fluids; consider drug effect vs vagal vs bleeding.</li>
+<li>Discharge: Aldrete ≥9 (or return to baseline), stable vitals ×30 min after last drug (longer after reversal), responsible adult escort, written instructions.</li>
+</ol>`}]}
+};
+
+/* =========================================================
+   QUICK REFERENCE (emergency mode) — protocol data
+   ========================================================= */
+function pd(mgkg,maxmg,unit){ // peds dose calc string
+  const w=state.weight;
+  if(!w) return "";
+  let v=mgkg*w; if(maxmg&&v>maxmg)v=maxmg;
+  const r=v<1?v.toFixed(2):(v<10?v.toFixed(1):Math.round(v));
+  return ` <span class="calc">→ ${r} ${unit} @ ${w} kg</span>`;
+}
+/* ---- NIHSS calculator ---- */
+const NIHSS=[
+{n:"1a · Level of consciousness",o:["Alert (0)","Drowsy, arouses to minor stim (1)","Obtunded, needs repeated stim (2)","Coma / reflex responses only (3)"]},
+{n:"1b · LOC questions (month, age)",o:["Both correct (0)","One correct / intubated (1)","Neither correct (2)"]},
+{n:"1c · LOC commands (close eyes, grip)",o:["Both correct (0)","One correct (1)","Neither correct (2)"]},
+{n:"2 · Best gaze",o:["Normal (0)","Partial gaze palsy (1)","Forced deviation (2)"]},
+{n:"3 · Visual fields",o:["No loss (0)","Partial hemianopia (1)","Complete hemianopia (2)","Bilateral / blind (3)"]},
+{n:"4 · Facial palsy",o:["Normal (0)","Minor (flattened fold) (1)","Partial (lower face) (2)","Complete (upper+lower) (3)"]},
+{n:"5a · Motor — LEFT arm (hold 10 s)",o:["No drift (0)","Drift, doesn't hit bed (1)","Falls to bed, some effort (2)","No effort vs gravity (3)","No movement (4)"]},
+{n:"5b · Motor — RIGHT arm",o:["No drift (0)","Drift (1)","Falls, some effort (2)","No effort vs gravity (3)","No movement (4)"]},
+{n:"6a · Motor — LEFT leg (hold 5 s)",o:["No drift (0)","Drift (1)","Falls, some effort (2)","No effort vs gravity (3)","No movement (4)"]},
+{n:"6b · Motor — RIGHT leg",o:["No drift (0)","Drift (1)","Falls, some effort (2)","No effort vs gravity (3)","No movement (4)"]},
+{n:"7 · Limb ataxia",o:["Absent (0)","One limb (1)","Two limbs (2)"]},
+{n:"8 · Sensory (pinprick)",o:["Normal (0)","Mild–moderate loss (1)","Severe / total loss (2)"]},
+{n:"9 · Best language",o:["No aphasia (0)","Mild–moderate aphasia (1)","Severe aphasia (2)","Mute / global (3)"]},
+{n:"10 · Dysarthria",o:["Normal (0)","Mild–moderate (1)","Severe / unintelligible (2)"]},
+{n:"11 · Extinction / inattention",o:["None (0)","One modality (1)","Profound / >1 modality (2)"]}];
+function nihssSeverity(s){return s===0?"No stroke symptoms":s<=4?"Minor stroke":s<=15?"Moderate stroke":s<=20?"Moderate–severe stroke":"Severe stroke"}
+
+const QR=[
+{id:"arrest_a",name:"Adult Cardiac Arrest",sub:"VF / pVT / asystole / PEA",
+steps:()=>[
+"Pulse check ≤10 s → no pulse → CPR 100–120/min, depth 5–6 cm, minimal pauses",
+`Shockable (VF/pVT): defibrillate ${D("120–200 J biphasic")} → CPR 2 min → recheck`,
+`Epinephrine ${D("1 mg IV/IO q3–5 min")} (immediately if non-shockable; after 2nd shock if shockable)`,
+`Amiodarone ${D("300 mg")} → ${D("150 mg")} (refractory VF/pVT) or lidocaine ${D("1–1.5 mg/kg")}`,
+"Airway: 30:2 or advanced airway + 1 breath/6 s; capnography (ETCO₂ >10)",
+"Hs & Ts: hypoxia, hypovolemia, H⁺, K⁺, hypothermia · tension PTX, tamponade, toxins, PE, MI"]},
+{id:"brady_a",name:"Adult Bradycardia",sub:"Symptomatic, with pulse",
+steps:()=>[
+"Confirm symptomatic: hypotension, AMS, shock, chest pain, acute HF",
+`Atropine ${D("1 mg IV q3–5 min")} max ${D("3 mg")}`,
+`No response → transcutaneous pacing OR dopamine ${D("5–20 mcg/kg/min")} OR epi gtt ${D("2–10 mcg/min")}`,
+"Mobitz II / CHB → pace early; arrange transvenous pacing"]},
+{id:"tachy_a",name:"Adult Tachycardia",sub:"Unstable → cardiovert",
+steps:()=>[
+`UNSTABLE → synchronized cardioversion: narrow-regular ${D("50–100 J")} · AF ${D("120–200 J")} · wide-regular ${D("100 J")}`,
+`Stable SVT: vagal → adenosine ${D("6 mg")} → ${D("12 mg")} rapid push + flush`,
+`Stable wide-complex: amiodarone ${D("150 mg IV over 10 min")}`,
+`Torsades: magnesium ${D("1–2 g IV")}`]},
+{id:"arrest_p",name:"Pediatric Arrest",sub:"Weight-based — enter weight above",wt:true,
+steps:()=>[
+"CPR 100–120/min, ⅓ chest depth, 15:2 (two rescuers)",
+`Defib ${D("2 J/kg")}${pd(2,null,"J")} → ${D("4 J/kg")}${pd(4,null,"J")} → max 10 J/kg`,
+`Epinephrine ${D("0.01 mg/kg IV/IO")}${pd(0.01,1,"mg")} = ${D("0.1 mL/kg of 0.1 mg/mL")}${pd(0.1,10,"mL")} q3–5 min`,
+`Amiodarone ${D("5 mg/kg")}${pd(5,300,"mg")} for refractory VF/pVT`,
+`Fluid bolus ${D("10–20 mL/kg")}${pd(20,null,"mL")}`]},
+{id:"brady_p",name:"Pediatric Bradycardia",sub:"HR <60 + poor perfusion",wt:true,
+steps:()=>[
+"Oxygenate & ventilate FIRST — usually hypoxic",
+"Still HR <60 with poor perfusion → start CPR",
+`Epinephrine ${D("0.01 mg/kg IV/IO")}${pd(0.01,1,"mg")} q3–5 min`,
+`Atropine ${D("0.02 mg/kg")}${pd(0.02,0.5,"mg")} (max 0.5 mg) if vagal / AV block`]},
+{id:"tachy_p",name:"Pediatric SVT",sub:"Adenosine / cardioversion",wt:true,
+steps:()=>[
+"Vagal maneuvers (ice to face in infants)",
+`Adenosine ${D("0.1 mg/kg")}${pd(0.1,6,"mg")} (max 6) → ${D("0.2 mg/kg")}${pd(0.2,12,"mg")} (max 12), rapid push`,
+`Unstable → sync cardioversion ${D("0.5–1 J/kg")}${pd(1,null,"J")} → ${D("2 J/kg")}${pd(2,null,"J")}`]},
+{id:"stroke",name:"Acute Stroke",sub:"BE-FAST positive — time is brain",
+steps:()=>[
+"Note LAST KNOWN WELL time · activate stroke team · check GLUCOSE (mimic if <60)",
+`Non-contrast head CT STAT (door-to-CT ≤ ${D("25 min")}) + CTA head/neck for LVO`,
+`No bleed & within ${D("3–4.5 h")}: alteplase ${D("0.9 mg/kg (max 90 mg)")} — 10% bolus, rest over 60 min — or tenecteplase ${D("0.25 mg/kg (max 25 mg)")} bolus`,
+`BP must be ${D("< 185/110")} before lytics → labetalol ${D("10–20 mg IV")} or nicardipine gtt; keep ${D("< 180/105")} ×24 h after`,
+`LVO → thrombectomy candidate up to ${D("24 h")} (DAWN/DEFUSE-3) — lytics first if eligible, don't delay transfer`,
+`NOT a lytic candidate → treat BP only if ${D("> 220/120")}`,
+"Post-lytic worsening → STOP infusion, stat CT, cryoprecipitate, neurosurgery"]},
+{id:"nihss",name:"NIHSS Calculator",sub:"Tap findings — score & severity update live",calc:true,steps:()=>[]},
+{id:"anaph",name:"Anaphylaxis / Severe Contrast Reaction",sub:"Hypotension, laryngeal edema, severe bronchospasm",
+steps:()=>[
+"Call for help / code team · stop infusion · O₂ high-flow",
+`EPINEPHRINE IM (lateral thigh) ${D("0.3 mL of 1 mg/mL (0.3 mg)")} — repeat q5–15 min`,
+`If monitored, IV option: ${D("1–3 mL of 0.1 mg/mL (0.1–0.3 mg)")} slowly; max ~1 mg total`,
+`Legs elevated · rapid IV fluids ${D("1 L NS, repeat PRN")}`,
+"Refractory → epinephrine infusion, anesthesia/ICU"]},
+{id:"bronch",name:"Contrast: Bronchospasm",sub:"Wheezing after contrast",
+steps:()=>[
+"O₂, monitor SpO₂ / BP / HR",
+`Albuterol inhaler ${D("2 puffs")}, repeat ×3 PRN`,
+`Hypoxic or progressing → epinephrine IM ${D("0.3 mg")}`,
+"Preserve IV access; do not discharge early"]},
+{id:"laryng",name:"Contrast: Laryngeal Edema",sub:"Stridor, hoarseness, throat tightness",
+steps:()=>[
+"Call for help EARLY — airway can be lost quickly",
+`Epinephrine IM ${D("0.3 mL of 1 mg/mL")} q5–15 min PRN`,
+"O₂ by mask; sit upright if breathing adequately",
+"Antihistamines are NOT first-line — epinephrine is the treatment"]},
+{id:"vagal",name:"Contrast: Vasovagal",sub:"Hypotension + BRADYcardia",
+steps:()=>[
+"Legs elevated, O₂, rapid IV fluids",
+`Persistent → atropine ${D("0.6–1 mg IV")}, repeat to ${D("3 mg total")}`,
+"Distinguish from anaphylactoid (that has TACHYcardia → fluids + epi)"]},
+{id:"urtic",name:"Contrast: Urticaria",sub:"Hives / itching",
+steps:()=>[
+"Mild & stable: observe; no treatment usually needed",
+`Symptomatic: diphenhydramine ${D("25–50 mg PO/IM/IV")} (warn: drowsiness, no driving) or fexofenadine ${D("180 mg PO")}`,
+"Progressing / diffuse + hypotension → treat as anaphylactoid"]},
+{id:"seiz",name:"Seizure",sub:"During or after contrast / sedation",
+steps:()=>[
+"Protect from injury, lateral decubitus, suction, O₂",
+`>2–3 min or recurrent → midazolam ${D("2–5 mg IV/IM")} or lorazepam ${D("2–4 mg IV")}`,
+"Check glucose; consider contrast neurotoxicity vs primary cause"]},
+{id:"oversed",name:"Over-sedation / Apnea",sub:"During moderate sedation",
+steps:()=>[
+"STOP sedatives · stimulate · jaw thrust / chin lift",
+"100% O₂ → bag-mask if apneic → oral/nasal airway",
+`Opioid → naloxone ${D("0.04–0.4 mg IV")} q2–3 min titrated`,
+`Benzo → flumazenil ${D("0.2 mg IV")} q1 min, max ${D("1 mg")}`,
+"Observe ≥2 h after reversal — re-sedation risk · call anesthesia if not improving"]},
+{id:"extrav",name:"Contrast Extravasation",sub:"Swelling at injection site",
+steps:()=>[
+"Stop injection · elevate extremity · cold or warm compress",
+"Document volume, site, exam; observe before discharge",
+"Surgical consult: progressive pain/swelling, blistering, perfusion change, paresthesias (compartment syndrome)"]}
+];
+
+/* =========================================================
+   SCENARIOS
+   ========================================================= */
+const SCN=[
+{cat:"ACLS",title:"Collapse in the Reading Room Hallway",
+vit:{HR:"0",BP:"—",SpO2:"—",RR:"0",Rhythm:"VF",Other:"58 y M, unresponsive"},
+stem:"A 58-year-old hospital visitor collapses outside your reading room. He is unresponsive, not breathing, no pulse. The code cart arrives; the monitor shows coarse ventricular fibrillation.",
+q:[{q:"Best immediate next step?",o:["Epinephrine 1 mg IV","Defibrillate 120–200 J biphasic","Amiodarone 300 mg IV","Intubate first"],c:1,
+fb:"VF is shockable — defibrillation is the single most important therapy. Epi comes after the 2nd shock; airway should not delay shocks."},
+{q:"After the first shock you resume CPR. When is the rhythm reassessed?",o:["Immediately after the shock","After 2 minutes of CPR","After epinephrine is given","After 5 cycles of breaths"],c:1,
+fb:"Resume compressions immediately post-shock and reassess after a full 2-minute cycle."},
+{q:"VF persists after the 2nd shock. Drug therapy now?",o:["Atropine 1 mg","Epinephrine 1 mg IV q3–5 min","Adenosine 6 mg","Magnesium 2 g"],c:1,
+fb:"Epinephrine 1 mg q3–5 min starts after the second shock in shockable arrest."},
+{q:"VF persists after the 3rd shock. Add:",o:["Amiodarone 300 mg IV bolus","Amiodarone 150 mg over 10 min","Lidocaine 4 mg/kg","Procainamide infusion"],c:0,
+fb:"Refractory VF/pVT: amiodarone 300 mg bolus (then 150 mg once), or lidocaine 1–1.5 mg/kg. The 150 mg/10 min dose is for stable VT with a pulse."}]},
+
+{cat:"ACLS",title:"Symptomatic Bradycardia in Recovery",
+vit:{HR:"32",BP:"74/40",SpO2:"94%",RR:"14",Rhythm:"3° AV block",Other:"71 y F, lightheaded, cool"},
+stem:"A 71-year-old woman in your recovery area after a biopsy becomes lightheaded and diaphoretic. Monitor shows complete heart block at 32 bpm, BP 74/40.",
+q:[{q:"First drug?",o:["Epinephrine 1 mg IV push","Atropine 1 mg IV","Dopamine bolus 20 mg","Adenosine 6 mg"],c:1,
+fb:"Atropine 1 mg IV (repeat q3–5 min, max 3 mg) is first-line — but anticipate failure in complete heart block."},
+{q:"Atropine ×2 fails. Next?",o:["Wait and re-dose atropine to 3 mg","Transcutaneous pacing or epinephrine 2–10 mcg/min infusion","Amiodarone 150 mg","Synchronized cardioversion"],c:1,
+fb:"Infranodal block responds poorly to atropine — move to pacing and/or chronotropic infusion (epi 2–10 mcg/min or dopamine 5–20 mcg/kg/min) and arrange transvenous pacing."}]},
+
+{cat:"ACLS",title:"Unstable Narrow-Complex Tachycardia",
+vit:{HR:"186",BP:"78/46",SpO2:"95%",RR:"22",Rhythm:"Regular narrow",Other:"49 y M, chest pressure, pale"},
+stem:"A 49-year-old develops a regular narrow-complex tachycardia at 186 with BP 78/46, chest pressure, and confusion.",
+q:[{q:"Best next step?",o:["Adenosine 6 mg and reassess","Synchronized cardioversion 50–100 J","Amiodarone 150 mg over 10 min","Vagal maneuvers"],c:1,
+fb:"Hypotension + AMS + chest pain = unstable → immediate synchronized cardioversion (50–100 J for regular narrow-complex). Adenosine may be considered while pads go on, but never delay cardioversion."}]},
+
+{cat:"ACLS",title:"Aphasia in the MRI Waiting Room",
+vit:{HR:"84",BP:"196/104",SpO2:"97%",RR:"16",Glucose:"112",Other:"68 y M, LKW 75 min ago, right arm drift + aphasia"},
+stem:"A 68-year-old waiting for an outpatient MRI suddenly develops expressive aphasia and right arm drift. His wife reports he was completely normal 75 minutes ago. Glucose is 112. BP 196/104.",
+q:[{q:"Best immediate next step?",o:["MRI brain since he's already in the department","Non-contrast head CT and stroke team activation","Start labetalol and reassess in 30 min","Aspirin 325 mg now"],c:1,
+fb:"Activate the stroke pathway: non-contrast head CT (door-to-CT ≤20–25 min) to exclude hemorrhage, plus CTA for LVO. MRI is slower and shouldn't delay the lytic decision. Aspirin is held until thrombolysis is excluded or 24 h post-lytic."},
+{q:"CT shows no hemorrhage; CTA shows no LVO. NIHSS 9, LKW 90 min. What about his BP of 196/104?",o:["No treatment needed — permissive hypertension","Lower to <185/110 (e.g., labetalol 10–20 mg IV) so he can receive thrombolysis","Lower to <140/90 rapidly","BP excludes him from lytics permanently"],c:1,
+fb:"He's a thrombolysis candidate, so BP must be brought below 185/110 first — labetalol 10–20 mg IV or nicardipine infusion. Permissive hypertension applies only to non-lytic patients (treat >220/120)."},
+{q:"BP is now 172/94. Correct alteplase dosing for his 80 kg weight?",o:["72 mg total: 7.2 mg bolus, remainder over 60 min","90 mg flat dose IV push","0.25 mg/kg = 20 mg single bolus","100 mg over 2 hours"],c:0,
+fb:"Alteplase 0.9 mg/kg (max 90 mg): 80 kg → 72 mg, with 10% (7.2 mg) as a 1-min bolus and the rest over 60 minutes. (0.25 mg/kg single bolus is the tenecteplase regimen. The 100 mg/2 h protocol is for PE/STEMI, not stroke.)"},
+{q:"Forty minutes into the infusion he develops severe headache, vomiting, and BP 210/115. Next?",o:["Continue infusion, give ondansetron","Stop the infusion, stat non-contrast head CT, prepare cryoprecipitate","Give second lytic bolus","Increase BP goal and observe"],c:1,
+fb:"Classic post-lytic intracranial hemorrhage picture: stop alteplase immediately, stat CT, send fibrinogen/coags, give cryoprecipitate, and consult neurosurgery."}]},
+
+{cat:"ACLS",title:"Wake-Up Stroke with Large Vessel Occlusion",
+vit:{HR:"92",BP:"168/92",SpO2:"95%",RR:"18",NIHSS:"17",Other:"74 y F, normal at bedtime 9 h ago, left hemiplegia + gaze deviation"},
+stem:"A 74-year-old woman awakens with left hemiplegia, right gaze deviation, and neglect (NIHSS 17). She was last seen normal at bedtime, 9 hours ago. CT shows no hemorrhage; CTA shows a right M1 occlusion.",
+q:[{q:"Is IV alteplase indicated based on the time window?",o:["Yes — symptoms noticed <1 h ago","No — LKW is 9 h, beyond the 4.5-h window (absent advanced-imaging selection)","Yes — LVO extends the lytic window to 24 h","Only if BP >185/110"],c:1,
+fb:"The clock starts at last known well, not symptom discovery — 9 h exceeds the standard 3–4.5 h lytic window. (Select wake-up patients can be lytic-eligible by MRI DWI-FLAIR mismatch, but that's imaging-based selection, not the default.)"},
+{q:"What is she potentially still eligible for?",o:["Nothing — supportive care only","Mechanical thrombectomy up to 24 h from LKW if DAWN/DEFUSE-3 perfusion criteria are met","Full-dose heparin","Immediate aspirin 650 mg and discharge planning"],c:1,
+fb:"M1 occlusion at 9 h: she's squarely in the extended thrombectomy window — CT perfusion or MRI to assess core/penumbra mismatch (DAWN/DEFUSE-3), and rapid transfer to a thrombectomy-capable center."},
+{q:"While awaiting transfer (no lytics given), BP is 168/92. Management?",o:["Lower to <140/90","Lower to <185/110","No antihypertensive treatment — permissive hypertension unless >220/120","Start nitroprusside"],c:2,
+fb:"She received no thrombolytic, so permissive hypertension applies: treat only above ~220/120 (or for another emergency). Her 168/92 perfuses the penumbra."}]},
+
+{cat:"PALS",title:"Infant Found Apneic in Waiting Area",
+vit:{HR:"48",BP:"—",SpO2:"72%",RR:"agonal",Rhythm:"Sinus brady",Other:"4 mo, 6 kg, limp, mottled"},
+stem:"Parents rush a 4-month-old (≈6 kg) to you: limp, mottled, agonal breathing. HR 48 with poor perfusion. You begin bag-mask ventilation with 100% O₂. After 30 seconds, HR is still 52 with poor perfusion.",
+q:[{q:"Next action?",o:["Atropine 0.02 mg/kg","Continue BVM and reassess in 2 min","Start chest compressions","Defibrillate 2 J/kg"],c:2,
+fb:"Pediatric bradycardia <60 with poor perfusion despite adequate oxygenation/ventilation → start CPR."},
+{q:"First drug, with dose for 6 kg?",o:["Epinephrine 0.06 mg IV (0.01 mg/kg)","Epinephrine 0.6 mg IV (0.1 mg/kg)","Atropine 0.1 mg IV first","Amiodarone 30 mg"],c:0,
+fb:"Epinephrine 0.01 mg/kg = 0.06 mg (0.6 mL of 0.1 mg/mL) q3–5 min. The 0.1 mg/kg dose is a 10× overdose IV (that's the ETT dose). Atropine is reserved for vagal/AV-block causes."}]},
+
+{cat:"PALS",title:"Toddler with SVT",
+vit:{HR:"242",BP:"88/54",SpO2:"98%",RR:"32",Rhythm:"Narrow, no variability",Other:"2 y, 12 kg, fussy but perfusing"},
+stem:"A 2-year-old (12 kg) has HR 242, narrow complex, no beat-to-beat variability, abrupt onset. Perfusion is adequate; child is alert and fussy.",
+q:[{q:"After vagal maneuvers fail, give:",o:["Adenosine 1.2 mg rapid IV push","Adenosine 6 mg rapid IV push","Synchronized cardioversion 12 J","Amiodarone 60 mg"],c:0,
+fb:"Adenosine 0.1 mg/kg = 1.2 mg rapid push with immediate flush; second dose 0.2 mg/kg (2.4 mg). The fixed adult 6 mg dose is wrong in a 12-kg child. Cardioversion (0.5–1 J/kg) is for unstable patients."},
+{q:"He becomes hypotensive and lethargic before the second adenosine. Now?",o:["Second adenosine 2.4 mg","Synchronized cardioversion 6–12 J (0.5–1 J/kg)","Defibrillation 24 J","IV fluids only"],c:1,
+fb:"Unstable SVT → synchronized cardioversion 0.5–1 J/kg (6–12 J), escalate to 2 J/kg."}]},
+
+{cat:"ATLS",title:"MVC: Hypotensive and Tachycardic",
+vit:{HR:"128",BP:"86/52",SpO2:"93%",RR:"26",GCS:"13",Other:"34 y M, unrestrained driver"},
+stem:"A 34-year-old unrestrained driver arrives after high-speed MVC. Airway patent, breath sounds equal. HR 128, BP 86/52, anxious and confused. FAST shows free fluid in the RUQ.",
+q:[{q:"What class of hemorrhagic shock best fits?",o:["Class I","Class II","Class III","Class IV"],c:2,
+fb:"Hypotension + marked tachycardia + confusion = Class III (31–40% blood volume) — requires blood products, not just crystalloid."},
+{q:"BP falls to 70/40 despite initial resuscitation; FAST positive. Disposition?",o:["CT abdomen/pelvis with contrast","Operating room","Angioembolization first","DPL to confirm"],c:1,
+fb:"Hemodynamically unstable + positive FAST → OR. CT is for stable patients only."},
+{q:"Within 3 hours of injury, which adjunct improves survival in significant hemorrhage?",o:["TXA 1 g IV over 10 min, then 1 g over 8 h","Vitamin K 10 mg","Calcium gluconate alone","High-dose steroids"],c:0,
+fb:"TXA within 3 h of injury (CRASH-2 protocol). Calcium matters during massive transfusion but TXA is the survival adjunct here."}]},
+
+{cat:"ATLS",title:"Sudden Decompensation: Chest Trauma",
+vit:{HR:"138",BP:"72/44",SpO2:"84%",RR:"34",GCS:"14",Other:"Absent right breath sounds, JVD, tracheal shift left"},
+stem:"During the primary survey of a stabbing victim, he abruptly worsens: absent right breath sounds, distended neck veins, trachea deviated left, BP 72/44.",
+q:[{q:"Immediate action?",o:["Portable chest X-ray","Needle/finger decompression, 5th ICS anterior axillary line","Intubate first","Pericardiocentesis"],c:1,
+fb:"Tension pneumothorax is a clinical diagnosis — decompress immediately (5th ICS, anterior axillary line per ATLS 10th ed), then chest tube. Imaging first kills."}]},
+
+{cat:"Contrast",title:"Stridor 5 Minutes After CT Contrast",
+vit:{HR:"118",BP:"92/58",SpO2:"91%",RR:"28",Rhythm:"Sinus tach",Other:"44 y F, hoarse voice, inspiratory stridor"},
+stem:"Five minutes after iodinated contrast for a CT chest, a 44-year-old develops hoarseness, throat tightness, and inspiratory stridor. SpO₂ 91% on room air.",
+q:[{q:"Most important first medication?",o:["Diphenhydramine 50 mg IV","Epinephrine 0.3 mg IM (0.3 mL of 1 mg/mL), lateral thigh","Methylprednisolone 125 mg IV","Albuterol 2 puffs"],c:1,
+fb:"Laryngeal edema = epinephrine, immediately, IM lateral thigh. Antihistamines and steroids do not treat airway edema acutely. Also: O₂, call for help, repeat epi q5–15 min PRN."},
+{q:"She improves, then BP drops to 76/40 with HR 134. Next?",o:["Atropine 1 mg","Legs up, rapid IV NS, repeat epinephrine","Furosemide 40 mg","Observe only"],c:1,
+fb:"Hypotension + tachycardia after contrast = anaphylactoid → aggressive fluids + epinephrine. (Atropine is for the hypotension + BRADYcardia vasovagal pattern.)"}]},
+
+{cat:"Contrast",title:"Pale and Bradycardic After Injection",
+vit:{HR:"42",BP:"80/50",SpO2:"97%",RR:"16",Rhythm:"Sinus brady",Other:"29 y M, diaphoretic, nauseated"},
+stem:"A 29-year-old becomes pale, diaphoretic, and nauseated during contrast injection. HR 42, BP 80/50, breathing comfortably.",
+q:[{q:"Most likely diagnosis and first steps?",o:["Anaphylactoid → epinephrine IM now","Vasovagal → legs up, O₂, IV fluids","Cardiogenic shock → dobutamine","Bronchospasm → albuterol"],c:1,
+fb:"Hypotension + bradycardia = vasovagal. Trendelenburg/leg raise, O₂, fluids; atropine 0.6–1 mg IV if persistent (max 3 mg). Epinephrine here could be harmful."}]},
+
+{cat:"Contrast",title:"Power Injector Extravasation",
+vit:{HR:"88",BP:"128/76",SpO2:"99%",RR:"14",Other:"75 mL into forearm; swelling, pain 6/10"},
+stem:"A power injection infiltrates: roughly 75 mL of contrast into the forearm. Moderate swelling and pain. Fingers pink, brisk cap refill, sensation intact.",
+q:[{q:"Initial management?",o:["Immediate surgical consult for fasciotomy","Elevate limb, cold or warm compress, serial exams before discharge","Aspirate contrast through the IV","Hyaluronidase injection routinely"],c:1,
+fb:"Most extravasations resolve with elevation, compresses, and observation. Aspiration and routine hyaluronidase aren't supported by the ACR Manual."},
+{q:"Which finding mandates urgent surgical consultation?",o:["Pain 6/10 at the site","Progressive swelling with paresthesias and decreased perfusion","Volume >50 mL alone","Bruising at the site"],c:1,
+fb:"Compartment syndrome signs — progressive pain/swelling, paresthesias, perfusion change, blistering/ulceration — drive surgical consult, not volume alone."}]},
+
+{cat:"Sedation",title:"Apnea During Moderate Sedation",
+vit:{HR:"96",BP:"104/62",SpO2:"82% ↓",RR:"0",MOAAS:"1",Other:"Midazolam 4 mg + fentanyl 150 mcg given"},
+stem:"During an arthrogram under moderate sedation (midazolam 4 mg + fentanyl 150 mcg total), the capnography waveform flattens. SpO₂ falls to 82%; the patient responds only to painful stimulus.",
+q:[{q:"Correct sequence?",o:["Naloxone immediately, then airway","Stop drugs → stimulate → jaw thrust → 100% O₂ → bag-mask if needed → then reversal","Flumazenil 1 mg push","Intubate immediately"],c:1,
+fb:"Airway and ventilation come first; reversal supports, not replaces, basic airway rescue. Then naloxone 0.04–0.4 mg titrated (opioid-predominant picture) ± flumazenil 0.2 mg/min."},
+{q:"After naloxone he wakes up. Minimum monitoring change?",o:["Discharge once awake ×15 min","Extend observation ≥2 h — re-sedation risk as naloxone wears off","No change needed","Give prophylactic second naloxone and discharge"],c:1,
+fb:"Naloxone's duration is shorter than fentanyl's — observe at least 2 hours after reversal."}]},
+
+{cat:"Sedation",title:"Pre-Sedation Screening Catch",
+vit:{HR:"78",BP:"142/88",SpO2:"95%",RR:"16",BMI:"41",Other:"Loud snoring, witnessed apneas, neck 44 cm"},
+stem:"You're consenting a patient for moderate sedation: BMI 41, loud snoring with witnessed apneas, hypertension, neck circumference 44 cm. He ate a full breakfast 3 hours ago for a 1 pm elective procedure.",
+q:[{q:"Best plan?",o:["Proceed now with reduced doses","Delay to meet NPO (6 h light / 8 h fatty meal) and plan for high OSA risk — consider anesthesiology","Proceed; NPO doesn't apply to moderate sedation","Cancel permanently"],c:1,
+fb:"Two issues: NPO not met for an elective case (light meal 6 h, fatty 8 h), and STOP-BANG-high OSA raises airway risk — dose cautiously, capnography mandatory, low threshold for anesthesia involvement."}]}
+];
+
+/* =========================================================
+   FLASHCARDS
+   ========================================================= */
+const FC=[
+["ACLS","Adult CPR: rate and depth?","100–120 compressions/min, depth 2–2.4 in (5–6 cm), full recoil, pauses <10 s."],
+["ACLS","Adult defibrillation energy (biphasic)?","120–200 J per manufacturer; if unknown, use maximum available. Resume CPR immediately after."],
+["ACLS","Epinephrine dose/timing in adult arrest?","1 mg IV/IO every 3–5 min. ASAP in asystole/PEA; after the 2nd shock in VF/pVT."],
+["ACLS","Amiodarone dosing in refractory VF/pVT?","300 mg IV bolus, then 150 mg once. (Alternative: lidocaine 1–1.5 mg/kg, then 0.5–0.75 mg/kg.)"],
+["ACLS","Atropine in bradycardia: dose & max?","1 mg IV q3–5 min, maximum 3 mg."],
+["ACLS","Second-line options after atropine fails?","Transcutaneous pacing; dopamine 5–20 mcg/kg/min; epinephrine infusion 2–10 mcg/min."],
+["ACLS","Adenosine dosing for stable SVT?","6 mg rapid IV push with flush; then 12 mg if no conversion."],
+["ACLS","Sync cardioversion energies?","Narrow-regular 50–100 J · narrow-irregular (AF) 120–200 J biphasic · wide-regular 100 J."],
+["ACLS","Torsades de pointes treatment?","Magnesium 1–2 g IV; defibrillate if pulseless. Correct K⁺, stop QT-prolonging drugs."],
+["ACLS","Name the Hs.","Hypovolemia, Hypoxia, Hydrogen ion (acidosis), Hypo-/Hyperkalemia, Hypothermia."],
+["ACLS","Name the Ts.","Tension pneumothorax, Tamponade, Toxins, Thrombosis–pulmonary (PE), Thrombosis–coronary (MI)."],
+["ACLS","ETCO₂ targets during CPR?",">10 mmHg minimum (ideally >20). Abrupt rise suggests ROSC; persistent <10 = poor compression quality/prognosis."],
+["ACLS","Post-ROSC oxygen & BP goals?","SpO₂ 92–98%, PaCO₂ 35–45, SBP >90 / MAP >65; ECG for STEMI; TTM 32–37.5 °C if comatose."],
+["ACLS","Stroke: lytic time windows?","Alteplase/tenecteplase ≤3 h from last known well; 3–4.5 h in selected patients. Clock starts at LKW, not symptom discovery."],
+["ACLS","Alteplase stroke dosing?","0.9 mg/kg (max 90 mg): 10% as 1-min IV bolus, remainder over 60 min. Tenecteplase alternative: 0.25 mg/kg (max 25 mg) single bolus."],
+["ACLS","BP thresholds around stroke lytics?","Must be <185/110 before lytics (labetalol 10–20 mg IV or nicardipine gtt); keep <180/105 for 24 h after."],
+["ACLS","Stroke BP rule if NOT giving lytics?","Permissive hypertension — treat only if >220/120 (or another emergency indication)."],
+["ACLS","Thrombectomy window for LVO?","Up to 24 h from LKW in selected patients (DAWN / DEFUSE-3 perfusion criteria); give lytics first if eligible."],
+["ACLS","First test in suspected stroke (besides CT)?","Glucose — hypoglycemia <60 mg/dL is the classic stroke mimic."],
+["ACLS","Suspected ICH during lytic infusion: actions?","Stop infusion → stat non-contrast CT → coags/fibrinogen → cryoprecipitate → neurosurgery consult."],
+["PALS","Pediatric epinephrine arrest dose?","0.01 mg/kg IV/IO (0.1 mL/kg of the 0.1 mg/mL concentration) q3–5 min; max 1 mg."],
+["PALS","Pediatric defibrillation doses?","2 J/kg → 4 J/kg → ≥4 J/kg, max 10 J/kg or adult dose."],
+["PALS","When do you start CPR in pediatric bradycardia?","HR <60 with poor perfusion despite adequate oxygenation and ventilation."],
+["PALS","Pediatric atropine dose?","0.02 mg/kg (max 0.5 mg/dose) — for vagally mediated bradycardia or primary AV block."],
+["PALS","Pediatric adenosine doses?","0.1 mg/kg (max 6 mg), then 0.2 mg/kg (max 12 mg), rapid push + flush."],
+["PALS","Pediatric synchronized cardioversion?","0.5–1 J/kg initially; increase to 2 J/kg."],
+["PALS","Pediatric fluid bolus?","10–20 mL/kg isotonic crystalloid (10 mL/kg if cardiac dysfunction suspected); reassess after each bolus."],
+["PALS","Compression-to-ventilation ratio in children?","30:2 single rescuer; 15:2 with two rescuers; with advanced airway, 1 breath q2–3 s."],
+["PALS","SVT vs sinus tach in an infant?","SVT: HR usually >220 (infant) / >180 (child), abrupt onset, no beat-to-beat variability, history doesn't explain rate."],
+["PALS","Pediatric amiodarone dose in arrest?","5 mg/kg IV/IO bolus; may repeat up to 3 total doses for refractory VF/pVT."],
+["PALS","Hypoglycemia treatment in a child?","D10W 5 mL/kg IV (0.5 g/kg)."],
+["ATLS","Primary survey order?","A airway + C-spine · B breathing · C circulation/hemorrhage · D disability (GCS) · E exposure/environment."],
+["ATLS","GCS components and severe TBI cutoff?","Eyes 4 / Verbal 5 / Motor 6 (3–15). Severe ≤8 → intubate. Moderate 9–12, mild 13–15."],
+["ATLS","Class III hemorrhagic shock features?","31–40% loss: hypotension, marked tachycardia, confusion, decreased urine output → needs blood products."],
+["ATLS","Tension pneumothorax: diagnosis & treatment?","Clinical diagnosis (absent breath sounds, JVD, tracheal deviation, shock) → immediate needle/finger decompression 5th ICS anterior axillary line → chest tube."],
+["ATLS","TXA protocol in trauma?","1 g IV over 10 min within 3 h of injury, then 1 g over 8 h."],
+["ATLS","Massive transfusion ratio?","Balanced 1:1:1 plasma : platelets : RBCs; monitor calcium and temperature."],
+["ATLS","Unstable + positive FAST → ?","Operating room. CT only for hemodynamically stable patients."],
+["ATLS","Lethal triad of trauma?","Hypothermia + acidosis + coagulopathy."],
+["Contrast","Most contrast reactions occur within…?","20 minutes of injection — keep IV access and observe high-risk patients."],
+["Contrast","First-line drug for laryngeal edema?","Epinephrine — IM 0.3 mL of 1 mg/mL (0.3 mg), repeat q5–15 min. NOT antihistamines."],
+["Contrast","Epinephrine IM vs IV in contrast reactions?","IM (lateral thigh) 0.3 mg of 1 mg/mL preferred. IV only dilute (0.1 mg/mL), 1–3 mL slowly, with monitoring. Max ~1 mg total."],
+["Contrast","Hypotension + bradycardia after contrast = ? Treatment?","Vasovagal: legs up, O₂, IV fluids; atropine 0.6–1 mg IV (to 3 mg) if persistent."],
+["Contrast","Hypotension + tachycardia after contrast = ? Treatment?","Anaphylactoid: rapid IV fluids + epinephrine; O₂; escalate early."],
+["Contrast","Bronchospasm treatment ladder?","O₂ + albuterol 2 puffs (repeat) → epinephrine IM 0.3 mg if hypoxic/refractory."],
+["Contrast","Standard oral premedication regimen?","Prednisone 50 mg PO at 13, 7, and 1 h pre-contrast + diphenhydramine 50 mg 1 h prior."],
+["Contrast","Accelerated IV premedication?","Methylprednisolone 40 mg IV (or hydrocortisone 200 mg IV) q4h until the study + diphenhydramine 50 mg IV 1 h prior; steroid ideally ≥4–5 h before."],
+["Contrast","Extravasation: when to call surgery?","Progressive swelling/pain, blistering or ulceration, decreased perfusion, worsening paresthesias — compartment syndrome concern."],
+["Contrast","Metformin rule with iodinated contrast?","eGFR ≥30 and no AKI: continue. eGFR <30 or AKI: hold 48 h and recheck renal function."],
+["Contrast","Mild urticaria management?","Usually observation only; if symptomatic, diphenhydramine 25–50 mg (sedating — no driving) or fexofenadine 180 mg PO."],
+["Sedation","Define moderate sedation.","Purposeful response to verbal or light tactile stimulation; airway and ventilation adequate without intervention; cardiovascular function maintained."],
+["Sedation","NPO guidelines?","Clear liquids 2 h · light meal 6 h · fatty/fried meal 8 h."],
+["Sedation","Midazolam adult dosing?","0.5–2 mg IV slowly, titrate q2–5 min; typical total 2–5 mg; start 0.5 mg in elderly; reduce with opioids."],
+["Sedation","Fentanyl adult dosing?","25–50 mcg IV, titrate q2–5 min; typical total 50–150 mcg; synergistic respiratory depression with benzodiazepines."],
+["Sedation","Naloxone dosing for over-sedation?","0.04–0.4 mg IV q2–3 min titrated to respiration; duration shorter than fentanyl → observe ≥2 h."],
+["Sedation","Flumazenil dosing and caution?","0.2 mg IV over 15 s, repeat q1 min to 1 mg max. Avoid in chronic benzo users / seizure disorder; observe ≥2 h."],
+["Sedation","MOAA/S target for moderate sedation?","3–4 (responds after loud/repeated name, or lethargic response to name)."],
+["Sedation","Why capnography during sedation?","Detects hypoventilation/apnea before SpO₂ falls — earliest warning of respiratory depression."],
+["Sedation","Minimum monitoring set?","Continuous SpO₂ + capnography, ECG/HR, BP at least q5 min, level of consciousness, dedicated trained observer."],
+["Sedation","Airway rescue sequence for apnea?","Stop drugs → stimulate → jaw thrust/chin lift → 100% O₂ → bag-mask → adjunct airway → reversal agents → call for help."],
+["Sedation","ASA classes I–IV in one line each?","I healthy · II mild systemic disease · III severe systemic disease · IV severe disease that is a constant threat to life. III–IV → consider anesthesiology."],
+["Sedation","Discharge criteria after sedation?","Aldrete ≥9 or baseline status, stable vitals ≥30 min after last drug (longer post-reversal), escort, written instructions."]
+];
+
+/* =========================================================
+   STATE + ROUTER
+   ========================================================= */
+const state={tab:"learn",learnTopic:null,learnSec:null,weight:store.get("wt",null),
+  fc:{cat:"All",i:0,flip:false,order:null},
+  scn:{active:null,qi:0,score:0,answered:false}};
+
+function setTab(t){state.tab=t;render();window.scrollTo(0,0)}
+document.querySelectorAll("nav button").forEach(b=>b.addEventListener("click",()=>setTab(b.dataset.tab)));
+
+function render(){
+  document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("on",b.dataset.tab===state.tab&&state.tab!=="quick"));
+  if(state.tab==="learn")renderLearn();
+  else if(state.tab==="train")renderTrain();
+  else if(state.tab==="cards")renderCards();
+  else if(state.tab==="quick")renderQuick();
+}
+
+/* ---------------- LEARN ---------------- */
+function renderLearn(){
+  const k=state.learnTopic;
+  if(!k){
+    app.innerHTML=`<div class="brand"><span class="dot"></span><h1>CodeReady</h1></div>
+    <div class="sub">Emergency protocols for the radiology suite — study, drill, and reference.</div>
+    <div class="grid">${Object.entries(LEARN).map(([id,t])=>
+      `<button class="tile" data-id="${id}"><span class="tag ${t.tag}">${t.name}</span><b>${t.name==="Contrast Reactions"?"ACR Contrast":t.name}</b><span>${t.blurb}</span></button>`).join("")}
+    </div>
+    <footer class="note">Educational reference for licensed clinicians, synthesized from AHA 2020 ACLS/PALS guidelines, ATLS 10th edition, the ACR Manual on Contrast Media, and ASA moderate sedation guidance. Verify against current institutional protocols; this app does not replace certification or clinical judgment.</footer>`;
+    app.querySelectorAll(".tile").forEach(b=>b.addEventListener("click",()=>{state.learnTopic=b.dataset.id;state.learnSec=null;render();window.scrollTo(0,0)}));
+    return;
+  }
+  const t=LEARN[k];
+  if(state.learnSec===null){
+    app.innerHTML=`<button class="back" id="bk">‹ Topics</button>
+    <span class="tag ${t.tag}">${t.name}</span><h1 style="margin-top:6px">${t.name}</h1>
+    <div class="sub">${t.blurb}</div>
+    ${t.sections.map((s,i)=>`<button class="tile" style="width:100%;margin:8px 0" data-i="${i}"><b>${s.t}</b></button>`).join("")}`;
+    $("#bk").addEventListener("click",()=>{state.learnTopic=null;render()});
+    app.querySelectorAll(".tile").forEach(b=>b.addEventListener("click",()=>{state.learnSec=+b.dataset.i;render();window.scrollTo(0,0)}));
+    return;
+  }
+  const s=t.sections[state.learnSec];
+  app.innerHTML=`<button class="back" id="bk">‹ ${t.name}</button>
+  <h1 style="font-size:22px">${s.t}</h1><div class="card">${s.h}</div>
+  <div class="row">
+  ${state.learnSec>0?'<button class="btn ghost" id="pv">‹ Previous</button>':""}
+  ${state.learnSec<t.sections.length-1?'<button class="btn primary" id="nx">Next ›</button>':'<button class="btn primary" id="dn">Done</button>'}
+  </div>`;
+  $("#bk").addEventListener("click",()=>{state.learnSec=null;render();window.scrollTo(0,0)});
+  const nx=$("#nx"),pv=$("#pv"),dn=$("#dn");
+  if(nx)nx.addEventListener("click",()=>{state.learnSec++;render();window.scrollTo(0,0)});
+  if(pv)pv.addEventListener("click",()=>{state.learnSec--;render();window.scrollTo(0,0)});
+  if(dn)dn.addEventListener("click",()=>{state.learnSec=null;render();window.scrollTo(0,0)});
+}
+
+/* ---------------- TRAIN (scenarios) ---------------- */
+function renderTrain(){
+  const sc=state.scn;
+  if(!sc.active){
+    const cats=["All","ACLS","PALS","ATLS","Contrast","Sedation"];
+    sc.cat=sc.cat||"All";
+    const list=SCN.filter(s=>sc.cat==="All"||s.cat===sc.cat);
+    app.innerHTML=`<h1>Training Scenarios</h1>
+    <div class="sub">Work a case step by step. Decisions get immediate, guideline-based feedback.</div>
+    <div class="pillrow">${cats.map(c=>`<button class="pill ${sc.cat===c?"on":""}" data-c="${c}">${c}</button>`).join("")}</div>
+    <button class="btn primary" id="rand">▶ Random scenario</button>
+    ${list.map((s,i)=>`<button class="tile" style="width:100%;margin:8px 0" data-t="${s.title}">
+      <span class="tag ${s.cat==="ACLS"?"teal":s.cat==="PALS"?"blue":s.cat==="ATLS"?"amber":s.cat==="Contrast"?"red":"green"}">${s.cat}</span>
+      <b>${s.title}</b><span>${s.q.length} decision point${s.q.length>1?"s":""}</span></button>`).join("")}`;
+    app.querySelectorAll(".pill").forEach(b=>b.addEventListener("click",()=>{sc.cat=b.dataset.c;render()}));
+    $("#rand").addEventListener("click",()=>startScn(list[Math.floor(Math.random()*list.length)]));
+    app.querySelectorAll(".tile").forEach(b=>b.addEventListener("click",()=>startScn(SCN.find(s=>s.title===b.dataset.t))));
+    return;
+  }
+  const s=sc.active,q=s.q[sc.qi],done=sc.qi>=s.q.length;
+  if(done){
+    const pct=Math.round(100*sc.score/s.q.length);
+    app.innerHTML=`<button class="back" id="bk">‹ Scenarios</button>
+    <div class="card" style="text-align:center;padding:28px">
+    <div style="font-size:44px;font-weight:800;color:${pct>=80?"var(--green)":pct>=50?"var(--amber)":"var(--red)"}">${pct}%</div>
+    <p><b>${s.title}</b></p><p class="sub">${sc.score} of ${s.q.length} first-attempt decisions correct</p>
+    <button class="btn primary" id="again">Replay scenario</button>
+    <button class="btn ghost" id="next">Next random scenario</button></div>`;
+    $("#bk").addEventListener("click",()=>{sc.active=null;render()});
+    $("#again").addEventListener("click",()=>startScn(s));
+    $("#next").addEventListener("click",()=>{const pool=SCN.filter(x=>x!==s);startScn(pool[Math.floor(Math.random()*pool.length)])});
+    return;
+  }
+  app.innerHTML=`<button class="back" id="bk">‹ Exit scenario</button>
+  <span class="tag ${s.cat==="ACLS"?"teal":s.cat==="PALS"?"blue":s.cat==="ATLS"?"amber":s.cat==="Contrast"?"red":"green"}">${s.cat}</span>
+  <h1 style="font-size:21px;margin-top:6px">${s.title}</h1>
+  <div class="progress"><i style="width:${100*sc.qi/s.q.length}%"></i></div>
+  <div class="card"><p>${s.stem}</p>
+  <div class="vitals">${Object.entries(s.vit).filter(([k])=>k!=="Other").map(([k,v])=>`<div class="vt"><b>${v}</b><span>${k}</span></div>`).join("")}</div>
+  ${s.vit.Other?`<p class="sub" style="margin:4px 0 0">${s.vit.Other}</p>`:""}</div>
+  <h3>Decision ${sc.qi+1} of ${s.q.length}: ${q.q}</h3>
+  <div id="opts">${q.o.map((o,i)=>`<button class="opt" data-i="${i}">${o}</button>`).join("")}</div>
+  <div id="fb"></div>`;
+  $("#bk").addEventListener("click",()=>{sc.active=null;render()});
+  app.querySelectorAll(".opt").forEach(b=>b.addEventListener("click",()=>{
+    if(sc.answered)return;
+    sc.answered=true;
+    const i=+b.dataset.i,ok=i===q.c;
+    if(ok)sc.score++;
+    app.querySelectorAll(".opt").forEach((x,xi)=>{
+      if(xi===q.c)x.classList.add("right");
+      else if(xi===i)x.classList.add("wrong");
+    });
+    $("#fb").innerHTML=`<div class="fb ${ok?"good":"bad"}"><b>${ok?"Correct.":"Not quite."}</b> ${q.fb}</div>
+    <button class="btn primary" id="cont">${sc.qi+1<s.q.length?"Continue ›":"See results"}</button>`;
+    $("#cont").addEventListener("click",()=>{sc.qi++;sc.answered=false;render();window.scrollTo(0,0)});
+  }));
+}
+function startScn(s){state.scn={active:s,qi:0,score:0,answered:false,cat:state.scn.cat};render();window.scrollTo(0,0)}
+
+/* ---------------- CARDS ---------------- */
+function shuffle(a){const x=[...a];for(let i=x.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[x[i],x[j]]=[x[j],x[i]]}return x}
+function renderCards(){
+  const f=state.fc;
+  const cats=["All","ACLS","PALS","ATLS","Contrast","Sedation"];
+  const deck=FC.map((c,i)=>({i,cat:c[0],q:c[1],a:c[2]})).filter(c=>f.cat==="All"||c.cat===f.cat);
+  if(!f.order||f.order.length!==deck.length)f.order=deck.map((_,i)=>i);
+  if(f.i>=deck.length)f.i=0;
+  const card=deck[f.order[f.i]];
+  app.innerHTML=`<h1>Flashcards</h1>
+  <div class="sub">Tap a card to flip. ${deck.length} cards in this deck.</div>
+  <div class="pillrow">${cats.map(c=>`<button class="pill ${f.cat===c?"on":""}" data-c="${c}">${c}</button>`).join("")}</div>
+  <div class="fc-meta"><span>Card ${f.i+1} / ${deck.length}</span><span class="tag ${card.cat==="ACLS"?"teal":card.cat==="PALS"?"blue":card.cat==="ATLS"?"amber":card.cat==="Contrast"?"red":"green"}">${card.cat}</span></div>
+  <div class="fc-stage"><div class="fc ${f.flip?"flip":""}" id="fc">
+    <div class="fc-face"><div class="q">${card.q}</div><span class="sub">tap to reveal</span></div>
+    <div class="fc-face b"><div class="a">${card.a}</div></div>
+  </div></div>
+  <div class="row"><button class="btn ghost" id="pv">‹ Back</button><button class="btn primary" id="nx">Next ›</button></div>
+  <button class="btn ghost" id="sh">⤮ Shuffle deck</button>`;
+  app.querySelectorAll(".pill").forEach(b=>b.addEventListener("click",()=>{f.cat=b.dataset.c;f.i=0;f.flip=false;f.order=null;render()}));
+  $("#fc").addEventListener("click",()=>{f.flip=!f.flip;$("#fc").classList.toggle("flip")});
+  $("#nx").addEventListener("click",()=>{f.i=(f.i+1)%deck.length;f.flip=false;render()});
+  $("#pv").addEventListener("click",()=>{f.i=(f.i-1+deck.length)%deck.length;f.flip=false;render()});
+  $("#sh").addEventListener("click",()=>{f.order=shuffle(f.order);f.i=0;f.flip=false;render()});
+}
+
+/* ---------------- QUICK REF (emergency mode) ---------------- */
+function renderQuick(qrId){
+  const proto=qrId?QR.find(x=>x.id===qrId):null;
+  if(proto&&proto.calc){renderNIHSS();return}
+  const inner=qrId?(()=>{const p=proto;
+    return `<button class="em-close" id="bk" style="margin-bottom:8px">‹ All protocols</button>
+    <div class="em-title" style="margin-bottom:2px">${p.name}</div>
+    <div style="color:#E8AFAF;font-size:13.5px;margin-bottom:10px">${p.sub}</div>
+    ${p.wt?wtBar():""}
+    <div class="em-card"><h3>Protocol</h3>${p.steps().map((s,i)=>`<div class="em-step"><span class="n">${i+1}</span><span>${s}</span></div>`).join("")}</div>
+    <p style="font-size:11.5px;color:#C98F8F;margin-top:14px">Reference aid only — follow institutional protocols and clinical judgment.</p>`})()
+  :`<div class="em-head"><div class="em-title">⚡ QUICK REFERENCE</div><button class="em-close" id="bk">Exit</button></div>
+    <div style="color:#E8AFAF;font-size:13.5px;margin-bottom:6px">Tap the scenario in front of you.</div>
+    ${wtBar()}
+    ${QR.map(p=>`<button class="em-btn" data-id="${p.id}">${p.name}<small>${p.sub}</small></button>`).join("")}`;
+  app.innerHTML="";
+  let w=$(".em-wrap");
+  if(!w){w=document.createElement("div");w.className="em-wrap";document.body.appendChild(w)}
+  w.innerHTML=`<div class="inner">${inner}</div>`;
+  w.scrollTop=0;
+  const bk=w.querySelector("#bk");
+  bk.addEventListener("click",()=>{ if(qrId){renderQuick()} else {w.remove();setTab("learn")} });
+  w.querySelectorAll(".em-btn").forEach(b=>b.addEventListener("click",()=>renderQuick(b.dataset.id)));
+  const wi=w.querySelector("#wt");
+  if(wi){wi.addEventListener("input",()=>{const v=parseFloat(wi.value);state.weight=(v>0&&v<300)?v:null;store.set("wt",state.weight);
+    /* re-render dose calcs without losing focus context */ });
+    wi.addEventListener("change",()=>renderQuick(qrId));
+    wi.addEventListener("blur",()=>renderQuick(qrId));}
+}
+function wtBar(){return `<div class="wt-bar"><label>Patient weight (peds dosing)</label>
+<input id="wt" type="number" inputmode="decimal" placeholder="kg" value="${state.weight||""}"><label>kg</label></div>`}
+
+/* ---- NIHSS calculator screen ---- */
+function renderNIHSS(){
+  if(!state.nihss)state.nihss=Array(NIHSS.length).fill(null);
+  app.innerHTML="";
+  let w=$(".em-wrap");
+  if(!w){w=document.createElement("div");w.className="em-wrap";document.body.appendChild(w)}
+  w.innerHTML=`<div class="inner">
+  <button class="em-close" id="bk" style="margin-bottom:8px">‹ All protocols</button>
+  <div class="em-title">NIHSS Calculator</div>
+  <div style="color:#E8AFAF;font-size:13px;margin:2px 0 8px">Tap the finding for each item. Score totals live below.</div>
+  <div class="nih-score" id="scorebar"></div>
+  ${NIHSS.map((it,i)=>`<div class="em-card" style="padding:12px"><h3 style="margin-bottom:6px">${it.n}</h3>
+    <div class="nih-opts" data-item="${i}">
+    ${it.o.map((o,j)=>`<button class="nih-opt" data-i="${i}" data-v="${j}">${o}</button>`).join("")}
+    </div></div>`).join("")}
+  <button class="em-btn" id="reset" style="text-align:center;background:#52191F">Reset all items</button>
+  <p style="font-size:11.5px;color:#C98F8F;margin-top:10px">Severity bands: 0 none · 1–4 minor · 5–15 moderate · 16–20 moderate–severe · 21–42 severe. Untested/amputation items: score 0 here and document per NIHSS rules.</p>
+  </div>`;
+  w.scrollTop=0;
+  const upd=()=>{
+    const vals=state.nihss,sum=vals.reduce((a,v)=>a+(v||0),0),n=vals.filter(v=>v!==null).length;
+    $("#scorebar").innerHTML=`<b>${sum}</b><span>${n}/${NIHSS.length} items · ${nihssSeverity(sum)}${n<NIHSS.length?" (incomplete)":""}</span>`;
+  };
+  upd();
+  // restore prior selections
+  state.nihss.forEach((v,i)=>{if(v!==null){const b=w.querySelector(`.nih-opt[data-i="${i}"][data-v="${v}"]`);if(b)b.classList.add("on")}});
+  w.querySelectorAll(".nih-opt").forEach(b=>b.addEventListener("click",()=>{
+    const i=+b.dataset.i,v=+b.dataset.v;
+    state.nihss[i]=v;
+    w.querySelectorAll(`.nih-opt[data-i="${i}"]`).forEach(x=>x.classList.remove("on"));
+    b.classList.add("on");
+    upd();
+  }));
+  $("#reset").addEventListener("click",()=>{state.nihss=Array(NIHSS.length).fill(null);renderNIHSS()});
+  w.querySelector("#bk").addEventListener("click",()=>renderQuick());
+}
+
+/* ---------------- boot ---------------- */
+if("serviceWorker" in navigator){navigator.serviceWorker.register("sw.js").catch(()=>{})}
+render();
+</script>
+</body>
+</html>
