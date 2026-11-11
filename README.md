@@ -1,6 +1,9 @@
 # CodeReady — Emergency Protocols PWA
 
-Single-page PWA: ACLS / PALS / ATLS / ACR contrast reactions / moderate sedation.
+Single-page PWA: ACLS / PALS / ATLS / contrast safety / moderate sedation.
+
+**Unofficial.** A personal project whose visual styling is inspired by Lumexa Imaging.
+It is not an official Lumexa Imaging product and is not endorsed by the company.
 Features: Learn pages, scenario trainer, flashcards, and an offline-capable
 Quick Reference "emergency mode" with weight-based pediatric dose calculation.
 
@@ -25,3 +28,9 @@ Quick Reference "emergency mode" with weight-based pediatric dose calculation.
 - All content is bundled in index.html — no external dependencies, no tracking.
 - Educational reference for licensed clinicians; verify against current
   AHA / ACR / ATLS / institutional protocols.
+- Contrast content follows the 2026 Imaging Contrast Manual (outpatient policy) and
+  Wang et al., Radiology 2025;315(2):e240100 (ACR/AAAAI consensus statement).
+- The contrast manual is an internal policy document. Check with compliance before
+  hosting this app in a public repository; a private repo or private hosting avoids the question.
+- Updating: re-upload `index.html`, `manifest.json`, and `sw.js`. The cache version in
+  `sw.js` (currently v4) is what makes installed phones pick up the new build.

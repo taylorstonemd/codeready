@@ -4,144 +4,207 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
 <title>CodeReady — Emergency Protocols</title>
-<meta name="description" content="ACLS, PALS, ATLS, ACR contrast reaction, and moderate sedation education and quick reference.">
+<meta name="description" content="ACLS, PALS, ATLS, contrast safety, and moderate sedation education and quick reference. Unofficial personal reference.">
 <!-- iOS PWA -->
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="CodeReady">
 <link rel="manifest" href="manifest.json">
-<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' rx='40' fill='%230E7C7B'/%3E%3Cpath d='M30 95h28l12-34 20 62 14-42 10 14h36' stroke='white' stroke-width='10' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
-<meta name="theme-color" content="#0E7C7B">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' rx='40' fill='%23085389'/%3E%3Cpath d='M30 95h28l12-34 20 62 14-42 10 14h36' stroke='white' stroke-width='10' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<meta name="theme-color" content="#085389">
 <style>
 :root{
-  --paper:#FBFCFD; --card:#FFFFFF; --ink:#0F1B2D; --slate:#5B6B7C; --line:#E3E8ED;
-  --teal:#0E7C7B; --teal-soft:#E4F2F1; --red:#B8232F; --red-soft:#FBEAEC; --red-deep:#8E1620;
-  --amber:#C77700; --amber-soft:#FCF1DF; --blue:#2563EB; --blue-soft:#E8EFFD;
-  --green:#157A3C; --green-soft:#E6F4EB;
-  --mono:ui-monospace,'SF Mono',SFMono-Regular,Menlo,monospace;
-  --sans:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
-  --r:14px; --tabbar:calc(64px + env(safe-area-inset-bottom));
+  /* Brand-derived palette: deep navy, sky blue, slate text, sand accent */
+  --navy:#085389; --sky:#489FD8; --sky-l:#9FD0F0; --sand:#D8CFA6;
+  --paper:#FFFFFF; --card:#F8FAFB; --raise:#FFFFFF; --line:#DCE2E7;
+  --ink:#314650; --slate:#6B7E88; --accent:#085389;
+  --btn:#085389; --btn-ink:#FFFFFF;
+  --pale:#E6F2FB; --pale-line:#BFDDF2;
+  --sand-soft:#F6F2E4; --sand-line:#E3DBBB; --sand-ink:#6A5E2E;
+  --th:#EEF3F6; --press:#EEF3F6; --navbg:rgba(255,255,255,.96);
+  --dose-bg:#E6F2FB; --dose-ink:#085389;
+  --red:#B3261E; --red-soft:#FBECEB; --red-line:#EBC5C2;
+  --green:#1B7A43; --green-soft:#E7F4EC; --green-line:#BBDCC7;
+  --amber:#A66A00;
+  --sans:"Helvetica Neue",Helvetica,Arial,sans-serif;
+  --r:12px; --tabbar:calc(66px + env(safe-area-inset-bottom,0px));
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    color-scheme:dark;
+    --paper:#0A1C2A; --card:#10283A; --raise:#14324A; --line:#254559;
+    --ink:#E3ECF2; --slate:#9FB3C1; --accent:#9FD0F0;
+    --btn:#1973B4; --btn-ink:#FFFFFF;
+    --pale:#143B58; --pale-line:#22587F;
+    --sand-soft:#2B2819; --sand-line:#4B4527; --sand-ink:#E4DBB4;
+    --th:#16334A; --press:#16334A; --navbg:rgba(10,28,42,.96);
+    --dose-bg:#143B58; --dose-ink:#CFE8F8;
+    --red:#F0A19B; --red-soft:#35181A; --red-line:#6B2B27;
+    --green:#7FD3A0; --green-soft:#13301F; --green-line:#285C3D;
+    --amber:#E3B45C;
+  }
 }
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html{height:100%}
 body{font-family:var(--sans);background:var(--paper);color:var(--ink);min-height:100%;
   font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased;overscroll-behavior-y:none}
-#app{max-width:680px;margin:0 auto;padding:calc(14px + env(safe-area-inset-top)) 16px var(--tabbar)}
-h1{font-size:26px;font-weight:800;letter-spacing:-.02em}
-h2{font-size:19px;font-weight:800;letter-spacing:-.01em;margin:22px 0 10px}
-h3{font-size:16px;font-weight:700;margin:14px 0 6px}
+/* signature gradient rule across the very top (also fills the iOS status-bar area) */
+body::before{content:"";position:fixed;inset:0 0 auto;height:calc(env(safe-area-inset-top,0px) + 5px);
+  background:linear-gradient(90deg,var(--navy),var(--sky));z-index:110}
+#app{max-width:680px;margin:0 auto;padding:calc(24px + env(safe-area-inset-top,0px)) 16px var(--tabbar)}
+h1{font-size:24px;font-weight:700;letter-spacing:-.01em;line-height:1.2;color:var(--ink);
+  padding-bottom:9px;margin-bottom:10px;
+  background:linear-gradient(90deg,var(--navy),var(--sky)) left bottom/100% 3px no-repeat}
+h2{font-size:18px;font-weight:700;margin:22px 0 10px}
+h3{font-size:12.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin:18px 0 6px}
+h3::before{content:"";display:block;width:28px;height:3px;border-radius:2px;background:var(--sky);margin-bottom:7px}
+.card>h3:first-child{margin-top:2px}
 p{margin:6px 0}
 button{font-family:inherit;border:none;cursor:pointer;background:none;font-size:inherit;color:inherit}
-.brand{display:flex;align-items:baseline;gap:8px;margin-bottom:2px}
-.brand .dot{width:10px;height:10px;border-radius:3px;background:var(--teal);align-self:center}
+.eyebrow{font-size:11.5px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--slate)}
+.hero{position:relative;overflow:hidden;margin:-4px -16px 4px;padding:4px 16px 0}
+.hero::after{content:"";position:absolute;right:-6px;top:-10px;width:190px;height:120px;pointer-events:none;
+  background:radial-gradient(circle,var(--sky-l) 0 3px,transparent 3.6px) 0 0/15px 15px;opacity:.75;
+  -webkit-mask-image:radial-gradient(ellipse at 100% 0,#000 8%,transparent 72%);
+  mask-image:radial-gradient(ellipse at 100% 0,#000 8%,transparent 72%)}
+.hero>*{position:relative;z-index:1}
+.brand h1{font-size:30px;color:var(--accent);margin-top:2px}
 .sub{color:var(--slate);font-size:13.5px;margin-bottom:14px}
+.qtext{font-size:17px;font-weight:700;line-height:1.4;margin:4px 0 8px}
 /* ---- cards / chips ---- */
 .card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px;margin:10px 0}
-.tag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
-  padding:3px 8px;border-radius:6px;background:var(--teal-soft);color:var(--teal)}
-.tag.red{background:var(--red-soft);color:var(--red)}
-.tag.amber{background:var(--amber-soft);color:var(--amber)}
-.tag.blue{background:var(--blue-soft);color:var(--blue)}
-.tag.green{background:var(--green-soft);color:var(--green)}
-.dose{font-family:var(--mono);font-size:14px;font-weight:600;background:var(--blue-soft);color:#1E3A8A;
-  padding:1px 6px;border-radius:5px;white-space:nowrap}
-.warn{background:var(--amber-soft);border:1px solid #EBD3A8;border-radius:10px;padding:10px 12px;font-size:14px;margin:8px 0}
-.crit{background:var(--red-soft);border:1px solid #ECC4C8;border-radius:10px;padding:10px 12px;font-size:14px;margin:8px 0}
+.tag{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  padding:4px 11px;border-radius:999px;background:var(--pale);color:var(--accent)}
+.tag.blue{background:var(--sky-l);color:#06395F}
+.tag.amber{background:var(--sand-soft);color:var(--sand-ink)}
+.tag.red{background:var(--btn);color:#fff}
+.tag.green{background:var(--th);color:var(--ink)}
+.dose{font-size:14px;font-weight:700;background:var(--dose-bg);color:var(--dose-ink);
+  padding:1px 7px;border-radius:6px;white-space:nowrap;font-variant-numeric:tabular-nums}
+.k911{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.08em;background:#C62828;color:#fff;
+  padding:1px 8px;border-radius:999px;white-space:nowrap}
+.warn{background:var(--sand-soft);border:1px solid var(--sand-line);border-left:4px solid var(--sand);
+  border-radius:10px;padding:10px 12px;font-size:14px;margin:10px 0}
+.crit{background:var(--red-soft);border:1px solid var(--red-line);border-left:4px solid #C62828;
+  border-radius:10px;padding:10px 12px;font-size:14px;margin:10px 0}
+.policy{background:var(--btn);color:#fff;border-radius:var(--r);padding:13px 14px;font-size:14.5px;margin:10px 0}
+.policy b.lbl{display:block;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--sand);margin-bottom:3px}
+.policy .dose{background:#fff;color:#085389}
 ul,ol{padding-left:20px;margin:6px 0}
 li{margin:4px 0}
+li::marker{color:var(--sky);font-weight:700}
 table{width:100%;border-collapse:collapse;font-size:14px;margin:8px 0}
 th,td{border:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}
-th{background:#F2F5F7;font-weight:700}
+th{background:var(--th);font-weight:700}
+.tblwrap{overflow-x:auto}
+/* severity cards (mild / moderate / severe) */
+.sevgrid{display:grid;gap:8px;margin:8px 0}
+.sevcard{background:var(--raise);border:1px solid var(--line);border-radius:var(--r);padding:12px}
+.sevcard ul{margin:8px 0 0}
+.sev{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  padding:5px 16px;border-radius:999px}
+.sev.mild{background:#9FD0F0;color:#06395F}
+.sev.mod{background:#489FD8;color:#fff}
+.sev.sv{background:#085389;color:#fff}
+@media (prefers-color-scheme:dark){.sev.sv{background:#1973B4}}
 /* ---- tab bar ---- */
-nav{position:fixed;bottom:0;left:0;right:0;background:rgba(255,255,255,.96);backdrop-filter:blur(12px);
-  border-top:1px solid var(--line);display:flex;justify-content:space-around;
-  padding:6px 4px calc(6px + env(safe-area-inset-bottom));z-index:50;max-width:680px;margin:0 auto}
+nav{position:fixed;bottom:0;left:0;right:0;background:var(--navbg);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);
+  border-top:1px solid var(--line);display:flex;justify-content:space-around;align-items:flex-end;
+  padding:6px 4px calc(6px + env(safe-area-inset-bottom,0px));z-index:50;max-width:680px;margin:0 auto}
 nav button{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:4px 0;
-  font-size:10.5px;font-weight:600;color:var(--slate);border-radius:10px}
-nav button.on{color:var(--teal)}
-nav button.em{color:var(--red)}
+  font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--slate)}
+nav button.on{color:var(--accent)}
 nav button svg{width:24px;height:24px}
+nav button.em{color:var(--accent)}
+nav button.em svg{width:34px;height:34px;padding:6px;border-radius:50%;background:var(--btn);color:#fff;margin-top:-8px}
 /* ---- home grid ---- */
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.tile{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px 14px;
-  text-align:left;display:flex;flex-direction:column;gap:6px;min-height:96px}
-.tile b{font-size:15.5px}
-.tile span{font-size:12.5px;color:var(--slate);line-height:1.35}
-.tile:active{background:#F2F5F7}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:15px 14px;
+  text-align:left;display:flex;flex-direction:column;align-items:flex-start;gap:7px;min-height:96px}
+.tile b{font-size:15.5px;line-height:1.3}
+.tile span:not(.tag){font-size:12.5px;color:var(--slate);line-height:1.35}
+.tile:active{background:var(--press)}
 /* ---- buttons ---- */
-.btn{display:block;width:100%;text-align:center;padding:13px;border-radius:12px;font-weight:700;font-size:15.5px;margin:8px 0}
-.btn.primary{background:var(--teal);color:#fff}
-.btn.ghost{background:#fff;border:1.5px solid var(--line);color:var(--ink)}
-.btn.danger{background:var(--red);color:#fff}
+.btn{display:block;width:100%;text-align:center;padding:13px;border-radius:10px;font-weight:700;font-size:15px;margin:8px 0}
+.btn.primary{background:var(--btn);color:var(--btn-ink)}
+.btn.ghost{background:var(--raise);border:1.5px solid var(--line);color:var(--ink)}
 .btn:active{opacity:.85}
 .row{display:flex;gap:8px}
 .row .btn{flex:1}
-.back{display:inline-flex;align-items:center;gap:4px;color:var(--teal);font-weight:700;font-size:14.5px;padding:6px 0;margin-bottom:4px}
-/* ---- emergency mode ---- */
-.em-wrap{position:fixed;inset:0;background:#1C0B0D;color:#fff;z-index:100;overflow-y:auto;
-  padding:calc(14px + env(safe-area-inset-top)) 16px calc(20px + env(safe-area-inset-bottom))}
+.back{display:inline-flex;align-items:center;gap:4px;color:var(--accent);font-weight:700;font-size:14.5px;padding:6px 0;margin-bottom:4px}
+.score{font-size:44px;font-weight:700}
+/* ---- quick-reference mode (always deep navy) ---- */
+.em-wrap{position:fixed;inset:0;background:#062B47;color:#fff;z-index:100;overflow-y:auto;color-scheme:dark;
+  padding:calc(22px + env(safe-area-inset-top,0px)) 16px calc(20px + env(safe-area-inset-bottom,0px))}
 .em-wrap .inner{max-width:680px;margin:0 auto}
 .em-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
-.em-title{font-size:20px;font-weight:800;letter-spacing:.02em}
-.em-close{background:rgba(255,255,255,.14);color:#fff;font-weight:700;padding:8px 16px;border-radius:10px;font-size:14px}
-.em-btn{display:block;width:100%;text-align:left;background:#3A1418;border:1px solid #6B2127;color:#fff;
-  border-radius:14px;padding:16px;margin:8px 0;font-size:17px;font-weight:800}
-.em-btn small{display:block;font-weight:500;font-size:13px;color:#E8AFAF;margin-top:2px}
-.em-btn:active{background:#52191F}
-.em-card{background:#2A1013;border:1px solid #5A1C22;border-radius:14px;padding:14px;margin:10px 0}
-.em-card h3{color:#FF9D9D;font-size:13px;text-transform:uppercase;letter-spacing:.08em;margin:0 0 8px}
+.em-title{font-size:20px;font-weight:700;letter-spacing:.02em}
+.em-sub{color:#BBD9EE;font-size:13.5px;margin:2px 0 8px}
+.em-note{font-size:11.5px;color:#8FB6D2;margin-top:14px}
+.em-close{background:rgba(255,255,255,.14);color:#fff;font-weight:700;padding:8px 16px;border-radius:999px;font-size:14px}
+.em-btn{display:block;width:100%;text-align:left;background:#0A3F68;border:1px solid #1C5F93;color:#fff;
+  border-radius:12px;padding:15px 16px;margin:8px 0;font-size:17px;font-weight:700}
+.em-btn small{display:block;font-weight:400;font-size:13px;color:#BBD9EE;margin-top:2px}
+.em-btn:active{background:#0E4D7E}
+.em-btn.center{text-align:center}
+.em-group{font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#D8CFA6;margin:18px 2px 2px}
+.em-card{background:#083655;border:1px solid #1C5F93;border-radius:12px;padding:14px;margin:10px 0}
+.em-card h3{color:#D8CFA6;font-size:12px;letter-spacing:.14em;margin:0 0 8px}
+.em-card h3::before{display:none}
 .em-card li{margin:7px 0;font-size:15.5px}
-.em-card .dose{background:#fff;color:#8E1620;font-weight:700}
-.em-step{display:flex;gap:10px;margin:10px 0;font-size:15.5px}
-.em-step .n{flex:none;width:26px;height:26px;border-radius:8px;background:#fff;color:var(--red-deep);
-  font-weight:800;display:flex;align-items:center;justify-content:center;font-size:14px}
-.wt-bar{display:flex;align-items:center;gap:8px;background:#2A1013;border:1px solid #5A1C22;border-radius:12px;padding:10px 12px;margin:8px 0}
-.wt-bar input{width:70px;background:#fff;border:none;border-radius:8px;padding:8px;font-size:16px;font-weight:700;text-align:center;font-family:var(--mono)}
-.wt-bar label{font-size:13.5px;color:#E8AFAF;font-weight:600}
-.calc{font-family:var(--mono);color:#FFD3D3;font-size:13.5px}
+.em-card .dose,.em-step .dose{background:#fff;color:#085389}
+.em-step{display:flex;gap:10px;margin:11px 0;font-size:15.5px;line-height:1.45}
+.em-step .n{flex:none;width:26px;height:26px;border-radius:50%;background:#489FD8;color:#fff;
+  font-weight:700;display:flex;align-items:center;justify-content:center;font-size:13.5px}
+.wt-bar{display:flex;align-items:center;gap:8px;background:#083655;border:1px solid #1C5F93;border-radius:12px;padding:10px 12px;margin:8px 0}
+.wt-bar input{width:70px;background:#fff;color:#085389;border:none;border-radius:8px;padding:8px;font-size:16px;font-weight:700;text-align:center;font-family:inherit}
+.wt-bar label{font-size:13.5px;color:#BBD9EE;font-weight:700}
+.calc{color:#D8CFA6;font-size:13.5px;font-weight:700;font-variant-numeric:tabular-nums}
 /* ---- NIHSS ---- */
 .nih-score{position:sticky;top:0;z-index:5;display:flex;align-items:center;gap:12px;
-  background:#fff;color:var(--red-deep);border-radius:12px;padding:10px 14px;margin:8px 0;
+  background:#fff;color:#085389;border-radius:12px;padding:10px 14px;margin:8px 0;
   box-shadow:0 4px 14px rgba(0,0,0,.4)}
-.nih-score b{font-family:var(--mono);font-size:28px;font-weight:800}
-.nih-score span{font-size:13px;font-weight:600;line-height:1.3}
+.nih-score b{font-size:28px;font-weight:700;font-variant-numeric:tabular-nums}
+.nih-score span{font-size:13px;font-weight:700;line-height:1.3;color:#314650}
 .nih-opts{display:flex;flex-direction:column;gap:6px}
-.nih-opt{text-align:left;background:#3A1418;border:1px solid #6B2127;color:#F3D9D9;
+.nih-opt{text-align:left;background:#0A3F68;border:1px solid #1C5F93;color:#DCEBF5;
   border-radius:9px;padding:9px 11px;font-size:14px;line-height:1.35}
-.nih-opt.on{background:#fff;border-color:#fff;color:var(--red-deep);font-weight:700}
+.nih-opt.on{background:#fff;border-color:#fff;color:#085389;font-weight:700}
 .nih-opt:active{opacity:.8}
 /* ---- flashcards ---- */
 .fc-stage{perspective:1200px;margin:14px 0}
-.fc{position:relative;width:100%;min-height:240px;transform-style:preserve-3d;transition:transform .45s}
+.fc{position:relative;width:100%;min-height:250px;transform-style:preserve-3d;transition:transform .45s}
 .fc.flip{transform:rotateY(180deg)}
 .fc-face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;
-  background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px;
+  background:var(--card);border:1px solid var(--line);border-top:4px solid var(--sky);border-radius:var(--r);padding:22px;
   display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;gap:10px}
-.fc-face.b{transform:rotateY(180deg);background:#F4FAF9;border-color:#C8E2E0}
+.fc-face.b{transform:rotateY(180deg);background:var(--pale);border-color:var(--pale-line);border-top-color:var(--navy)}
 .fc-face .q{font-size:18px;font-weight:700;line-height:1.4}
 .fc-face .a{font-size:16px;line-height:1.5}
 .fc-meta{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--slate);margin:6px 2px}
 .pillrow{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}
-.pill{padding:7px 12px;border-radius:999px;border:1.5px solid var(--line);background:#fff;font-size:13px;font-weight:600;color:var(--slate)}
-.pill.on{background:var(--teal);border-color:var(--teal);color:#fff}
+.pill{padding:7px 14px;border-radius:999px;border:1.5px solid var(--line);background:var(--raise);
+  font-size:11.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--slate)}
+.pill.on{background:var(--btn);border-color:var(--btn);color:#fff}
 /* ---- scenarios ---- */
 .vitals{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:8px 0}
-.vt{background:#0F1B2D;color:#fff;border-radius:10px;padding:8px;text-align:center}
-.vt b{font-family:var(--mono);font-size:16px;display:block}
-.vt span{font-size:10.5px;color:#9FB0C3;text-transform:uppercase;letter-spacing:.05em}
-.opt{display:block;width:100%;text-align:left;background:#fff;border:1.5px solid var(--line);
-  border-radius:12px;padding:13px 14px;margin:7px 0;font-size:15px;line-height:1.4}
-.opt:active{background:#F2F5F7}
+.vt{background:#085389;color:#fff;border-radius:10px;padding:8px;text-align:center}
+.vt b{font-size:16px;display:block;font-variant-numeric:tabular-nums}
+.vt span{font-size:10px;color:#BBD9EE;text-transform:uppercase;letter-spacing:.1em;font-weight:700}
+.opt{display:block;width:100%;text-align:left;background:var(--raise);border:1.5px solid var(--line);
+  border-radius:var(--r);padding:13px 14px;margin:7px 0;font-size:15px;line-height:1.4}
+.opt:active{background:var(--press)}
 .opt.right{border-color:var(--green);background:var(--green-soft)}
 .opt.wrong{border-color:var(--red);background:var(--red-soft)}
 .fb{border-radius:10px;padding:10px 12px;font-size:14px;margin:8px 0}
-.fb.good{background:var(--green-soft);border:1px solid #BCDCC7}
-.fb.bad{background:var(--red-soft);border:1px solid #ECC4C8}
+.fb.good{background:var(--green-soft);border:1px solid var(--green-line)}
+.fb.bad{background:var(--red-soft);border:1px solid var(--red-line)}
 .progress{height:5px;background:var(--line);border-radius:99px;margin:8px 0;overflow:hidden}
-.progress i{display:block;height:100%;background:var(--teal);border-radius:99px;transition:width .3s}
+.progress i{display:block;height:100%;background:linear-gradient(90deg,var(--navy),var(--sky));border-radius:99px;transition:width .3s}
 .hidden{display:none}
-footer.note{font-size:11.5px;color:var(--slate);margin:24px 0 8px;line-height:1.5}
-@media (prefers-reduced-motion:reduce){.fc{transition:none}}
+footer.note{font-size:11.5px;color:var(--slate);margin:24px 0 8px;line-height:1.5;border-top:1px solid var(--line);padding-top:12px}
+footer.note b{color:var(--ink)}
+@media (prefers-reduced-motion:reduce){.fc,.progress i{transition:none}}
 </style>
 </head>
 <body>
@@ -158,7 +221,9 @@ footer.note{font-size:11.5px;color:var(--slate);margin:24px 0 8px;line-height:1.
 /* =========================================================
    CodeReady — single-file PWA
    Education + quick reference: ACLS / PALS / ATLS /
-   ACR contrast reactions / moderate sedation
+   contrast safety / moderate sedation
+   Unofficial personal reference; visual styling inspired by Lumexa Imaging.
+   Not an official Lumexa Imaging product and not endorsed by the company.
    ========================================================= */
 "use strict";
 
@@ -170,6 +235,7 @@ const $=s=>document.querySelector(s);
 const app=$("#app");
 const esc=s=>s.replace(/&/g,"&amp;").replace(/</g,"&lt;");
 const D=s=>`<span class="dose">${s}</span>`; // dose chip
+const K='<span class="k911">CALL 911</span>'; // escalation chip
 
 /* =========================================================
    LEARN CONTENT
@@ -320,46 +386,129 @@ sections:[
 <li>CT cystogram for gross hematuria + pelvic fracture; CTA neck per Denver/Memphis criteria for blunt cerebrovascular injury.</li>
 </ul>`}]},
 
-acr:{name:"Contrast Reactions",tag:"red",blurb:"ACR Manual on Contrast Media — recognition, treatment, premedication, extravasation.",
+acr:{name:"Contrast Reactions",tag:"red",blurb:"Outpatient contrast policy (2026 manual) + ACR/AAAAI 2025 consensus: reactions, prior reactors, pregnancy, renal.",
 sections:[
 {t:"Recognize & Classify",h:`
-<table><tr><th>Severity</th><th>Examples</th></tr>
-<tr><td><b>Mild</b></td><td>Limited urticaria/pruritus, nasal congestion, nausea, warmth — self-limited</td></tr>
-<tr><td><b>Moderate</b></td><td>Diffuse urticaria, facial edema without dyspnea, wheezing with normal O₂, isolated hypotension</td></tr>
-<tr><td><b>Severe</b></td><td>Laryngeal edema with stridor, hypoxic bronchospasm, anaphylactic shock, arrest</td></tr></table>
-<p>Most reactions occur within <b>20 minutes</b> of injection. Physiologic (warmth, vasovagal, nausea) ≠ allergic-like.</p>`},
+<p>Every reaction is sorted two ways: <b>allergic-like vs physiologic</b>, and <b>mild / moderate / severe</b>. Severity of the reaction drives treatment now and where the patient is scanned next time.</p>
+<div class="tblwrap"><table><tr><th>Severity</th><th>Allergic-like</th><th>Physiologic</th></tr>
+<tr><td><b>Mild</b><br>self-limited, no progression</td><td>Limited urticaria/pruritus, cutaneous edema, itchy or scratchy throat, nasal congestion, sneezing, conjunctivitis, rhinorrhea</td><td>Limited nausea/vomiting, flushing, warmth, chills, headache, dizziness, anxiety, altered taste, mild hypertension, vasovagal that resolves on its own</td></tr>
+<tr><td><b>Moderate</b><br>usually needs treatment</td><td>Diffuse urticaria/pruritus, diffuse erythema with stable vitals, facial edema without dyspnea, throat tightness or hoarseness without dyspnea, wheezing with mild or no hypoxia</td><td>Protracted nausea/vomiting, hypertensive urgency, isolated chest pain, vasovagal that needs and responds to treatment</td></tr>
+<tr><td><b>Severe</b><br>life-threatening</td><td>Diffuse or facial edema with dyspnea, diffuse erythema with hypotension, laryngeal edema with stridor and/or hypoxia, wheezing with significant hypoxia, anaphylactic shock (hypotension + tachycardia)</td><td>Vasovagal resistant to treatment, arrhythmia, seizure, hypertensive emergency</td></tr></table></div>
+<h3>First 60 seconds</h3>
+<ul>
+<li>Stop the injection at the first sign of a reaction; notify the supervising physician.</li>
+<li>Assess: how the patient looks, whether they can speak and how the voice sounds, breathing, vital signs.</li>
+<li>Keep the IV in place until discharge.</li>
+</ul>
+<div class="warn"><b>Vasovagal vs anaphylaxis:</b> vasovagal brings bradycardia from the outset and no skin findings; anaphylaxis usually brings tachycardia plus urticaria, flushing, or angioedema. Immediate reactions start within 1 hour; delayed reactions appear hours to a week later and are almost always cutaneous.</div>`},
 {t:"Treatment by Reaction (adult)",h:`
-<h3>Urticaria</h3><ul><li>Mild: observation usually suffices. If needed: <b>diphenhydramine</b> ${D("25–50 mg PO/IM/IV")} (warn re: drowsiness/driving) or fexofenadine ${D("180 mg PO")}.</li></ul>
-<h3>Bronchospasm</h3><ul><li>O₂, monitor. β-agonist inhaler (albuterol) ${D("2 puffs (90 mcg/puff)")}, repeat as needed.</li>
-<li>Severe / not responding: <b>epinephrine IM</b> ${D("0.3 mL of 1 mg/mL")} (or IV ${D("1–3 mL of 0.1 mg/mL slowly")} with monitoring).</li></ul>
-<h3>Laryngeal edema (stridor)</h3><ul><li>O₂ by mask, call for help early. <b>Epinephrine IM</b> ${D("0.3 mL of 1 mg/mL")}; repeat q5–15 min as needed (or IV 0.1 mg increments if monitored). No role for antihistamine alone.</li></ul>
-<h3>Hypotension + tachycardia (anaphylactoid)</h3><ul><li>Legs elevated, O₂, rapid IV fluids (${D("1 L NS")}). <b>Epinephrine</b> as above if refractory or severe.</li></ul>
-<h3>Hypotension + bradycardia (vasovagal)</h3><ul><li>Legs up, O₂, IV fluids. Persistent: <b>atropine</b> ${D("0.6–1 mg IV")}, repeat to ${D("3 mg total")}.</li></ul>
-<h3>Hypertensive crisis</h3><ul><li>O₂, monitor; labetalol ${D("20 mg IV")} or nitroglycerin; furosemide if pulmonary edema.</li></ul>
-<h3>Seizure</h3><ul><li>Protect, lateral decubitus, O₂, suction. Persistent: benzodiazepine (midazolam ${D("2–5 mg IV/IM")} or lorazepam ${D("2–4 mg IV")}).</li></ul>
-<h3>Pulmonary edema</h3><ul><li>O₂, head elevated; <b>furosemide</b> ${D("20–40 mg IV")}.</li></ul>
-<div class="crit"><b>Epinephrine pearls:</b> IM lateral thigh is preferred over subQ; IV epinephrine only dilute (0.1 mg/mL) and slow with cardiac monitoring. Repeat doses to a max ~1 mg total while arranging escalation.</div>`},
-{t:"Premedication (prior reactors)",h:`
-<h3>Elective (oral)</h3>
-<ul><li><b>Prednisone</b> ${D("50 mg PO at 13 h, 7 h, 1 h")} before contrast + <b>diphenhydramine</b> ${D("50 mg PO/IM/IV 1 h")} before.</li>
-<li>Alternative: methylprednisolone ${D("32 mg PO at 12 h and 2 h")} ± diphenhydramine.</li></ul>
-<h3>Accelerated (IV, urgent)</h3>
-<ul><li>Methylprednisolone ${D("40 mg IV")} or hydrocortisone ${D("200 mg IV")} q4h until study + diphenhydramine ${D("50 mg IV 1 h")} prior (steroids ideally ≥4–5 h before).</li></ul>
-<div class="warn">Premedication reduces—but does not eliminate—breakthrough reactions; most breakthroughs match the index severity. Have a treatment plan ready.</div>`},
+<div class="policy"><b class="lbl">Outpatient epinephrine rule</b>Auto-injector only: ${D("EpiPen 0.3 mg IM")}, anterolateral thigh, repeat every 5–15 min up to 3 times. <b>Call 911 any time an EpiPen is used.</b></div>
+<h3>Hives (urticaria)</h3>
+<div class="sevgrid">
+<div class="sevcard"><span class="sev mild">Mild</span><ul><li>Often no treatment needed.</li><li>If symptomatic, first line: <b>cetirizine (Zyrtec)</b> ${D("10 mg PO")}</li><li>Alternative: diphenhydramine (Benadryl) ${D("25–50 mg PO")}</li></ul></div>
+<div class="sevcard"><span class="sev mod">Moderate</span><ul><li>Monitor vitals, preserve IV access.</li><li><b>Cetirizine</b> ${D("10 mg PO")}</li><li>or diphenhydramine ${D("25–50 mg PO")}</li><li>or diphenhydramine ${D("50 mg IM or IV")} (IV slowly over 1–2 min)</li></ul></div>
+<div class="sevcard"><span class="sev sv">Severe</span><ul><li>Widespread and/or progressive: monitor vitals, preserve IV access.</li><li>Diphenhydramine ${D("50 mg IM or IV")} (IV slowly over 1–2 min)</li></ul></div>
+</div>
+<ul>
+<li>After any antihistamine: observe ${D("30 min")}, vitals (SpO₂, pulse, BP) every ${D("15 min")}.</li>
+<li><b>Cetirizine</b> and no drowsiness → may drive home after the 30 minutes. <b>Diphenhydramine</b> → must have a driver.</li>
+<li>Diphenhydramine IM/IV can cause or worsen hypotension.</li>
+</ul>
+<h3>Diffuse erythema</h3>
+<ul><li>Vitals, pulse oximeter, O₂ by mask ${D("6–10 L/min")}.</li>
+<li>Normotensive: no other treatment usually needed.</li>
+<li>Hypotensive: 0.9% saline or lactated Ringer’s ${D("1,000 mL rapidly")}. Profound or unresponsive to fluids → <b>EpiPen</b> ${D("0.3 mg IM")} <span class="k911">CALL 911</span></li></ul>
+<h3>Bronchospasm</h3>
+<ul><li>O₂ by mask ${D("6–10 L/min")}.</li>
+<li>Mild: albuterol inhaler ${D("2 puffs (180 mcg)")}, can repeat up to 3 times; consider 911 if response is incomplete.</li>
+<li>Moderate: albuterol as above; consider adding <b>EpiPen</b> ${D("0.3 mg IM")} <span class="k911">CALL 911</span></li>
+<li>Severe: <b>EpiPen</b> ${D("0.3 mg IM")} <span class="k911">CALL 911</span> and albuterol (may work synergistically).</li></ul>
+<h3>Laryngeal edema</h3>
+<ul><li>O₂ by mask ${D("6–10 L/min")}. <b>EpiPen</b> ${D("0.3 mg IM")}, repeat every 5–15 min up to 3 times <span class="k911">CALL 911</span></li>
+<li>Antihistamines treat skin findings only. They do not treat the airway.</li></ul>
+<h3>Hypotension (SBP &lt; 90)</h3>
+<ul><li>All: O₂ ${D("6–10 L/min")}, legs elevated at least 60°, saline or LR ${D("1,000 mL rapidly")}.</li>
+<li><b>With bradycardia (&lt; 60), vasovagal:</b> mild needs nothing more. Still symptomatic → atropine ${D("0.6–1 mg IV")} into running fluids, repeat to ${D("3 mg total")} <span class="k911">CALL 911</span></li>
+<li><b>With tachycardia (&gt; 100), anaphylactoid:</b> if hypotension persists → <b>EpiPen</b> ${D("0.3 mg IM")} <span class="k911">CALL 911</span></li></ul>
+<h3>Hypertensive crisis</h3>
+<ul><li>DBP &gt; 120, SBP &gt; 200, or end-organ symptoms: O₂, nitroglycerin ${D("0.4 mg SL")} every 5–10 min <span class="k911">CALL 911</span></li></ul>
+<h3>Pulmonary edema</h3>
+<ul><li>O₂ ${D("6–10 L/min")}, elevate head of bed <span class="k911">CALL 911</span></li></ul>
+<h3>Seizure</h3>
+<ul><li>Observe and protect, turn to the side, suction as needed, O₂ ${D("6–10 L/min")} <span class="k911">CALL 911</span></li></ul>
+<div class="crit"><b>After suspected anaphylaxis:</b> send the patient to the emergency department. Biphasic anaphylaxis occurred in about 10% of contrast anaphylaxis cases in one series, recurring up to 72 h later (mean 11 h). Delayed epinephrine is the risk factor for bad outcomes; glucocorticoids have no role in acute treatment.</div>
+<div class="warn"><b>Hospital setting only:</b> weight-based IM epinephrine ${D("0.01 mg/kg of 1 mg/mL, max 0.5 mg")}; IV epinephrine infusion (0.1 mg/mL) is reserved for protracted anaphylaxis with cardiac monitoring. Outpatient carts stock the auto-injector only.</div>
+<p class="sub">Children: outpatient centers do not give contrast to children under 30 kg; over 30 kg use the adult EpiPen. Pediatric hives: diphenhydramine ${D("1 mg/kg, max 50 mg")}.</p>`},
+{t:"Prior Reactors & Premedication",h:`
+<p>The steroid + antihistamine regimen is retired for outpatient imaging. What the patient gets depends on the severity of the <b>prior</b> reaction.</p>
+<div class="sevgrid">
+<div class="sevcard"><span class="sev mild">Prior mild</span>
+<ul><li>Outpatient scan is fine. Technologist alerts the supervising physician before injection.</li>
+<li><b>Offer an alternative contrast agent</b> when the inciting agent is known and switching is feasible.</li>
+<li><b>No premedication is necessary.</b></li>
+<li>Or: <b>cetirizine (Zyrtec)</b> ${D("10 mg PO, 1 h before the exam")}.</li></ul></div>
+<div class="sevcard"><span class="sev mod">Prior moderate</span><ul><li>Scan at a <b>hospital location</b>.</li><li>Consensus: shared decision-making on premedication; switch agent when feasible.</li></ul></div>
+<div class="sevcard"><span class="sev sv">Prior severe</span><ul><li>Scan at a <b>hospital location</b> with a rapid response team.</li><li>Consensus: consider alternative imaging first. If contrast is needed, premedicate and switch agent when feasible.</li></ul></div>
+</div>
+<ul><li>Children with a known contrast allergy: hospital facility.</li>
+<li>Moderate or severe reactors should be referred to an allergy specialist.</li></ul>
+<h3>No premedication for</h3>
+<ul><li>Prior physiologic or chemotoxic reactions (nausea, warmth, vasovagal).</li>
+<li>Shellfish or seafood allergy, “iodine allergy,” topical povidone-iodine reactions. Iodine is not an allergen.</li>
+<li>Prior delayed reactions: no evidence premedication helps. A severe cutaneous adverse reaction (SJS/TEN, DRESS, AGEP) means avoid iodinated contrast.</li></ul>
+<h3>Why switching beats steroids</h3>
+<div class="tblwrap"><table><tr><th>Re-exposure strategy (McDonald et al., 1,973 patients)</th><th>Breakthrough</th></tr>
+<tr><td>Same agent, no premedication</td><td>25%</td></tr>
+<tr><td>Same agent + steroid premedication</td><td>26%</td></tr>
+<tr><td>Different agent, no premedication</td><td>6%</td></tr>
+<tr><td>Different agent + premedication</td><td>3%</td></tr></table></div>
+<ul><li>Meta-analysis (6 studies, 7,155 patients): switching agents cut breakthrough reactions by 61%.</li>
+<li>Steroid/diphenhydramine costs: diagnostic delay, transient hyperglycemia, sedation and the need for a driver.</li>
+<li>When premedication is used, about 2% still break through, and nearly half of those are moderate or severe.</li></ul>
+<div class="warn"><b>Hospital reference (severe prior reaction, contrast unavoidable):</b> prednisone ${D("50 mg PO at 13, 7, 1 h")} or methylprednisolone ${D("32 mg PO at 12 and 2 h")}, with or without an antihistamine. Not used at outpatient centers.</div>`},
 {t:"Extravasation",h:`
-<ul>
-<li>Stop injection; elevate limb; cold or warm compresses (institutional preference; neither proven superior).</li>
-<li>Most resolve without sequelae. Document volume and site; clinical follow-up before discharge.</li>
-<li><b>Surgical consult if:</b> progressive swelling/pain, blistering or skin ulceration, altered perfusion (cap refill, pulses), worsening paresthesias — concern for <b>compartment syndrome</b>.</li>
-<li>Higher risk: large volume, viscous contrast, hand/foot/ankle sites, fragile veins, altered consciousness.</li>
-</ul>`},
-{t:"Renal & Special Situations",h:`
-<ul>
-<li>Contrast-induced nephropathy risk is lower than historically taught; IV hydration for eGFR ${D("< 30")} (individualize 30–44).</li>
-<li><b>Metformin:</b> eGFR ≥30 and no AKI → no need to hold. eGFR &lt;30 or AKI → hold 48 h, reassess renal function.</li>
-<li>Prior gadolinium reaction does not predict iodinated reaction (and vice versa) — premedicate for the agent class with the index reaction.</li>
-<li>Pregnancy: iodinated contrast may be used when needed; gadolinium only if essential.</li>
-</ul>`}]},
+<ol>
+<li>Stop the injection. Notify the supervising physician.</li>
+<li>Estimate the volume (injector reading, syringes, the site, the images). Record agent, volume, and lot number.</li>
+<li>Remove the catheter, apply a <b>warm or cold compress</b>, and elevate the limb above the heart.</li>
+<li>Outline the area with a permanent marker to track change.</li>
+<li>Observe as long as the supervising physician orders; release only when symptoms have improved and nothing new has developed.</li>
+<li>Give written discharge instructions; follow-up call in ${D("24–48 h")}.</li>
+</ol>
+<div class="crit"><b>Send for emergency or surgical evaluation:</b> progressive pain or swelling, blistering or ulceration, pallor, coolness or cyanosis below the site, numbness or tingling, decreased range of motion. These suggest compartment syndrome.</div>
+<p class="sub">Home care: elevate above the heart as often as possible for 24–48 h; compress 15–20 min, 4–5 times a day for 48 h.</p>`},
+{t:"Kidneys, Metformin & Dialysis",h:`
+<h3>Iodinated contrast: who needs a creatinine</h3>
+<ul><li>Only patients with a risk factor and no creatinine within ${D("30 days")}: diabetes, renal disease (CKD, prior AKI, albuminuria), dialysis, renal cancer, renal ablation/surgery/transplant, metformin.</li>
+<li>No risk factor → no baseline creatinine needed.</li></ul>
+<div class="tblwrap"><table><tr><th>eGFR</th><th>Risk</th><th>Action</th></tr>
+<tr><td>${D("≥ 30")}</td><td>Low</td><td>No change</td></tr>
+<tr><td>${D("< 30")}</td><td>Higher</td><td>Not an absolute contraindication. Radiologist decides if non-contrast is diagnostic; IV contrast needs ordering physician or nephrology approval.</td></tr></table></div>
+<ul><li>Do <b>not</b> reduce the contrast dose to protect the kidneys; it risks a nondiagnostic exam.</li>
+<li>No 24-hour maximum dose threshold; no creatinine needed between closely spaced studies.</li></ul>
+<h3>Metformin (iodinated contrast only)</h3>
+<ul><li><b>Category 1</b> (no AKI, eGFR ≥ 30): continue metformin. No need to recheck renal function.</li>
+<li><b>Category 2</b> (AKI or eGFR &lt; 30): stop at or before the procedure, hold ${D("48 h")} after, restart once renal function is confirmed stable.</li>
+<li>Gadolinium: no need to stop metformin.</li></ul>
+<h3>Dialysis</h3>
+<ul><li>Continue the routine dialysis schedule; dialysis within 24 h of contrast is not required (iodinated or gadolinium).</li>
+<li>Anuric, no functioning transplant: iodinated contrast carries no risk of further renal damage.</li>
+<li>Still making urine: treat as eGFR &lt; 30.</li></ul>
+<h3>Gadolinium</h3>
+<ul><li>Group II agents only. At standard doses, no renal questionnaire or lab testing is needed.</li>
+<li>A prior gadolinium reaction does not predict an iodinated reaction, and vice versa.</li></ul>`},
+{t:"Pregnancy, Breastfeeding & Fasting",h:`
+<div class="policy"><b class="lbl">Gadolinium in pregnancy · company stance</b>Outpatient facilities do <b>not</b> give gadolinium-based contrast to pregnant patients. If the exam is so strongly indicated that contrast must be given, the patient is scanned at a <b>hospital location</b>.</div>
+<ul><li>Why: gadolinium crosses the placenta and can accumulate in amniotic fluid. No detrimental fetal effect is proven, so it is reserved for cases with no alternative.</li>
+<li>Workflow: technologist notifies the supervising physician, who confers with the ordering physician.</li></ul>
+<h3>Iodinated contrast in pregnancy</h3>
+<ul><li>Do not withhold when it is needed for diagnosis. If the ordering provider knows about the pregnancy and judges the exam necessary, perform it as ordered.</li></ul>
+<h3>Breastfeeding (iodinated or gadolinium)</h3>
+<ul><li>Safe to continue. The infant absorbs a tiny fraction (for gadolinium, less than 0.0004% of the maternal dose).</li>
+<li>If the patient remains concerned: pump and discard for ${D("24 h")}.</li></ul>
+<h3>Fasting</h3>
+<ul><li>No NPO requirement for IV iodinated or gadolinium contrast. Do not delay or reschedule for fasting status.</li>
+<li>Exceptions: CT or MR enterography, exams with sedation or anesthesia, or physician direction.</li></ul>`}]},
 
 sed:{name:"Moderate Sedation",tag:"green",blurb:"Drugs, monitoring, MOAA/S, reversal agents, pre-procedure assessment.",
 sections:[
@@ -484,38 +633,64 @@ steps:()=>[
 {id:"nihss",name:"NIHSS Calculator",sub:"Tap findings — score & severity update live",calc:true,steps:()=>[]},
 {id:"anaph",name:"Anaphylaxis / Severe Contrast Reaction",sub:"Hypotension, laryngeal edema, severe bronchospasm",
 steps:()=>[
-"Call for help / code team · stop infusion · O₂ high-flow",
-`EPINEPHRINE IM (lateral thigh) ${D("0.3 mL of 1 mg/mL (0.3 mg)")} — repeat q5–15 min`,
-`If monitored, IV option: ${D("1–3 mL of 0.1 mg/mL (0.1–0.3 mg)")} slowly; max ~1 mg total`,
-`Legs elevated · rapid IV fluids ${D("1 L NS, repeat PRN")}`,
-"Refractory → epinephrine infusion, anesthesia/ICU"]},
+`Stop the injection · ${K} · O₂ by mask ${D("6–10 L/min")}`,
+`EPINEPHRINE auto-injector (EpiPen) ${D("0.3 mg IM")}, anterolateral thigh. Repeat every 5–15 min, up to 3 times`,
+`Legs elevated at least 60° · saline or LR ${D("1,000 mL rapidly")}`,
+"Keep the IV in. Vitals and pulse oximetry until EMS takes over",
+"Antihistamines and steroids come after epinephrine, never instead of it",
+"All suspected anaphylaxis goes to the ED: biphasic reactions occur up to 72 h later",
+`Child over 30 kg: adult EpiPen. Hospital setting: IM ${D("0.01 mg/kg, max 0.5 mg")}; IV infusion only with cardiac monitoring`]},
 {id:"bronch",name:"Contrast: Bronchospasm",sub:"Wheezing after contrast",
 steps:()=>[
-"O₂, monitor SpO₂ / BP / HR",
-`Albuterol inhaler ${D("2 puffs")}, repeat ×3 PRN`,
-`Hypoxic or progressing → epinephrine IM ${D("0.3 mg")}`,
-"Preserve IV access; do not discharge early"]},
+`O₂ by mask ${D("6–10 L/min")} · vitals · keep the IV in`,
+`MILD: albuterol ${D("2 puffs (180 mcg)")}, repeat up to 3 times. Consider 911 if the response is incomplete`,
+`MODERATE: albuterol, and consider EpiPen ${D("0.3 mg IM")} ${K}`,
+`SEVERE (significant hypoxia): EpiPen ${D("0.3 mg IM")} ${K} plus albuterol`,
+"EpiPen can repeat every 5–15 min, up to 3 times"]},
 {id:"laryng",name:"Contrast: Laryngeal Edema",sub:"Stridor, hoarseness, throat tightness",
 steps:()=>[
-"Call for help EARLY — airway can be lost quickly",
-`Epinephrine IM ${D("0.3 mL of 1 mg/mL")} q5–15 min PRN`,
-"O₂ by mask; sit upright if breathing adequately",
-"Antihistamines are NOT first-line — epinephrine is the treatment"]},
+`EpiPen ${D("0.3 mg IM")}, anterolateral thigh ${K}`,
+`O₂ by mask ${D("6–10 L/min")} · vitals · pulse oximeter · keep the IV in`,
+"Repeat the EpiPen every 5–15 min, up to 3 times",
+"Antihistamines do not treat the airway. Epinephrine is the treatment"]},
 {id:"vagal",name:"Contrast: Vasovagal",sub:"Hypotension + BRADYcardia",
 steps:()=>[
-"Legs elevated, O₂, rapid IV fluids",
-`Persistent → atropine ${D("0.6–1 mg IV")}, repeat to ${D("3 mg total")}`,
-"Distinguish from anaphylactoid (that has TACHYcardia → fluids + epi)"]},
+`Legs elevated at least 60° · O₂ ${D("6–10 L/min")} · saline or LR ${D("1,000 mL rapidly")}`,
+"Mild and resolving: no other treatment needed",
+`Still symptomatic: atropine ${D("0.6–1 mg IV")} into running fluids, repeat to ${D("3 mg total")} ${K}`,
+"TACHYcardia instead = anaphylactoid: fluids, then EpiPen if hypotension persists"]},
 {id:"urtic",name:"Contrast: Urticaria",sub:"Hives / itching",
 steps:()=>[
-"Mild & stable: observe; no treatment usually needed",
-`Symptomatic: diphenhydramine ${D("25–50 mg PO/IM/IV")} (warn: drowsiness, no driving) or fexofenadine ${D("180 mg PO")}`,
-"Progressing / diffuse + hypotension → treat as anaphylactoid"]},
+`MILD (scattered, transient): often no treatment. If symptomatic, first line is cetirizine (Zyrtec) ${D("10 mg PO")}; or diphenhydramine ${D("25–50 mg PO")}`,
+`MODERATE (numerous, bothersome): cetirizine ${D("10 mg PO")}; or diphenhydramine ${D("25–50 mg PO")} or ${D("50 mg IM/IV")}`,
+`SEVERE (widespread, progressive): diphenhydramine ${D("50 mg IM/IV")}, IV slowly over 1–2 min`,
+`Observe ${D("30 min")}, vitals every ${D("15 min")}. Keep the IV in until discharge`,
+"Cetirizine and not drowsy: may drive home. Diphenhydramine: needs a driver",
+"Hives with hypotension, wheeze, or throat symptoms: switch to the anaphylaxis protocol",
+"Before discharge: reaction card, discharge instructions, notify the referring office and reading radiologist"]},
+{id:"premed",name:"Contrast: Prior Reaction / Premed",sub:"Scheduling a patient with a contrast allergy",
+steps:()=>[
+"Classify the PRIOR reaction: symptoms, treatment needed, which agent",
+"MILD (limited hives, itch, congestion): outpatient is fine. Alert the supervising physician before injection",
+"Inciting agent known: offer an alternative agent. No premedication is necessary",
+`Otherwise: no premedication, or cetirizine (Zyrtec) ${D("10 mg PO, 1 h before")}`,
+"MODERATE or SEVERE: scan at a hospital location",
+"Child with a known contrast allergy: hospital facility",
+"Not reasons to premedicate: shellfish, iodine or povidone-iodine allergy, prior nausea, warmth, or vasovagal"]},
+{id:"preg",name:"Contrast: Pregnant Patient",sub:"Gadolinium vs iodinated",
+steps:()=>[
+"GADOLINIUM: not given to pregnant patients at outpatient facilities",
+"Contrast truly required: scan at a hospital location",
+"Technologist notifies the supervising physician, who confers with the ordering physician",
+"IODINATED (CT): do not withhold when needed for diagnosis and the ordering provider confirms",
+`Breastfeeding: continue after either agent. Optional: pump and discard for ${D("24 h")}`]},
 {id:"seiz",name:"Seizure",sub:"During or after contrast / sedation",
 steps:()=>[
-"Protect from injury, lateral decubitus, suction, O₂",
-`>2–3 min or recurrent → midazolam ${D("2–5 mg IV/IM")} or lorazepam ${D("2–4 mg IV")}`,
-"Check glucose; consider contrast neurotoxicity vs primary cause"]},
+"Protect from injury, turn to the side, suction as needed",
+`O₂ by mask ${D("6–10 L/min")} · vitals · keep the IV in`,
+`Outpatient imaging center: ${K} (no benzodiazepine on the contrast cart)`,
+`Hospital or sedation suite, seizure longer than 2–3 min: midazolam ${D("2–5 mg IV/IM")} or lorazepam ${D("2–4 mg IV")}`,
+"Check glucose"]},
 {id:"oversed",name:"Over-sedation / Apnea",sub:"During moderate sedation",
 steps:()=>[
 "STOP sedatives · stimulate · jaw thrust / chin lift",
@@ -525,9 +700,13 @@ steps:()=>[
 "Observe ≥2 h after reversal — re-sedation risk · call anesthesia if not improving"]},
 {id:"extrav",name:"Contrast Extravasation",sub:"Swelling at injection site",
 steps:()=>[
-"Stop injection · elevate extremity · cold or warm compress",
-"Document volume, site, exam; observe before discharge",
-"Surgical consult: progressive pain/swelling, blistering, perfusion change, paresthesias (compartment syndrome)"]}
+"Stop the injection · notify the supervising physician",
+"Estimate the volume. Record agent, volume, and lot number",
+"Remove the catheter · warm or cold compress · elevate above the heart",
+"Outline the area with a permanent marker",
+"Observe. Release only when symptoms are improving and nothing new has appeared",
+"ED or surgical evaluation: progressive pain or swelling, blistering, pallor, coolness or cyanosis, numbness, reduced motion",
+`Written discharge instructions · follow-up call in ${D("24–48 h")}`]}
 ];
 
 /* =========================================================
@@ -615,26 +794,60 @@ q:[{q:"Immediate action?",o:["Portable chest X-ray","Needle/finger decompression
 fb:"Tension pneumothorax is a clinical diagnosis — decompress immediately (5th ICS, anterior axillary line per ATLS 10th ed), then chest tube. Imaging first kills."}]},
 
 {cat:"Contrast",title:"Stridor 5 Minutes After CT Contrast",
-vit:{HR:"118",BP:"92/58",SpO2:"91%",RR:"28",Rhythm:"Sinus tach",Other:"44 y F, hoarse voice, inspiratory stridor"},
-stem:"Five minutes after iodinated contrast for a CT chest, a 44-year-old develops hoarseness, throat tightness, and inspiratory stridor. SpO₂ 91% on room air.",
-q:[{q:"Most important first medication?",o:["Diphenhydramine 50 mg IV","Epinephrine 0.3 mg IM (0.3 mL of 1 mg/mL), lateral thigh","Methylprednisolone 125 mg IV","Albuterol 2 puffs"],c:1,
-fb:"Laryngeal edema = epinephrine, immediately, IM lateral thigh. Antihistamines and steroids do not treat airway edema acutely. Also: O₂, call for help, repeat epi q5–15 min PRN."},
-{q:"She improves, then BP drops to 76/40 with HR 134. Next?",o:["Atropine 1 mg","Legs up, rapid IV NS, repeat epinephrine","Furosemide 40 mg","Observe only"],c:1,
-fb:"Hypotension + tachycardia after contrast = anaphylactoid → aggressive fluids + epinephrine. (Atropine is for the hypotension + BRADYcardia vasovagal pattern.)"}]},
+vit:{HR:"118",BP:"92/58",SpO2:"91%",RR:"28",Rhythm:"Sinus tach",Other:"44 y F, outpatient center, hoarse voice, inspiratory stridor"},
+stem:"Five minutes after iodinated contrast for a CT chest at an outpatient center, a 44-year-old develops hoarseness, throat tightness, and inspiratory stridor. SpO₂ 91% on room air.",
+q:[{q:"Most important first step?",o:["Diphenhydramine 50 mg IV","EpiPen 0.3 mg IM in the anterolateral thigh, and call 911","Methylprednisolone 125 mg IV","Albuterol 2 puffs"],c:1,
+fb:"Laryngeal edema is treated with epinephrine right away. At an outpatient center that means the auto-injector (0.3 mg IM), and 911 is called any time an EpiPen is used. Antihistamines treat skin findings only, and steroids have no role in acute anaphylaxis. Add O₂ at 6–10 L/min; the EpiPen can repeat every 5–15 min, up to 3 times."},
+{q:"She improves, then BP drops to 76/40 with HR 134 while EMS is on the way. Next?",o:["Atropine 1 mg","Legs up at least 60°, 1,000 mL saline rapidly, repeat the EpiPen","Furosemide 40 mg","Observe only"],c:1,
+fb:"Hypotension with tachycardia after contrast is anaphylactoid: fluids plus epinephrine. Atropine is for the hypotension-with-bradycardia vasovagal pattern."},
+{q:"EMS arrives and she now feels fine. Disposition?",o:["Discharge home after 30 minutes","Emergency department, to observe for biphasic anaphylaxis","Finish the CT, then discharge","Send home with cetirizine"],c:1,
+fb:"Any suspected anaphylaxis goes to the ED. About 10% of contrast anaphylaxis cases recur (biphasic) up to 72 hours later, and needing more than one epinephrine dose raises that risk. She leaves with a reaction card naming the agent and should be referred to an allergist."}]},
 
 {cat:"Contrast",title:"Pale and Bradycardic After Injection",
 vit:{HR:"42",BP:"80/50",SpO2:"97%",RR:"16",Rhythm:"Sinus brady",Other:"29 y M, diaphoretic, nauseated"},
 stem:"A 29-year-old becomes pale, diaphoretic, and nauseated during contrast injection. HR 42, BP 80/50, breathing comfortably.",
 q:[{q:"Most likely diagnosis and first steps?",o:["Anaphylactoid → epinephrine IM now","Vasovagal → legs up, O₂, IV fluids","Cardiogenic shock → dobutamine","Bronchospasm → albuterol"],c:1,
-fb:"Hypotension + bradycardia = vasovagal. Trendelenburg/leg raise, O₂, fluids; atropine 0.6–1 mg IV if persistent (max 3 mg). Epinephrine here could be harmful."}]},
+fb:"Hypotension with bradycardia is vasovagal. Legs up at least 60°, O₂, 1,000 mL fluids rapidly. If he stays symptomatic: atropine 0.6–1 mg IV into running fluids (to 3 mg total) and call 911. Epinephrine is the wrong drug here."}]},
 
 {cat:"Contrast",title:"Power Injector Extravasation",
 vit:{HR:"88",BP:"128/76",SpO2:"99%",RR:"14",Other:"75 mL into forearm; swelling, pain 6/10"},
 stem:"A power injection infiltrates: roughly 75 mL of contrast into the forearm. Moderate swelling and pain. Fingers pink, brisk cap refill, sensation intact.",
-q:[{q:"Initial management?",o:["Immediate surgical consult for fasciotomy","Elevate limb, cold or warm compress, serial exams before discharge","Aspirate contrast through the IV","Hyaluronidase injection routinely"],c:1,
-fb:"Most extravasations resolve with elevation, compresses, and observation. Aspiration and routine hyaluronidase aren't supported by the ACR Manual."},
+q:[{q:"Initial management?",o:["Immediate surgical consult for fasciotomy","Notify the supervising physician; elevate, warm or cold compress, mark the area, observe","Aspirate contrast through the IV","Hyaluronidase injection routinely"],c:1,
+fb:"Most extravasations resolve with elevation above the heart, compresses, and observation. Outline the area with a marker to track change, record agent, volume, and lot number, and call the patient in 24–48 hours. Aspiration and routine hyaluronidase are not part of the protocol."},
 {q:"Which finding mandates urgent surgical consultation?",o:["Pain 6/10 at the site","Progressive swelling with paresthesias and decreased perfusion","Volume >50 mL alone","Bruising at the site"],c:1,
 fb:"Compartment syndrome signs — progressive pain/swelling, paresthesias, perfusion change, blistering/ulceration — drive surgical consult, not volume alone."}]},
+
+{cat:"Contrast",title:"Hives After Contrast, Patient Drove Herself",
+vit:{HR:"84",BP:"124/78",SpO2:"99%",RR:"14",Other:"52 y F, scattered itchy hives on chest and arms"},
+stem:"Ten minutes after iodinated contrast at an outpatient center, a 52-year-old has scattered, itchy hives on her chest and arms. Vitals are normal, her voice is normal, lungs are clear. She drove herself and the itching is bothering her.",
+q:[{q:"Best treatment?",o:["Diphenhydramine 50 mg IV","Cetirizine (Zyrtec) 10 mg PO","EpiPen 0.3 mg IM","Prednisone 50 mg PO"],c:1,
+fb:"Mild hives often need nothing. When symptomatic, cetirizine 10 mg PO is first line: similar efficacy and onset to diphenhydramine with much less sedation. Diphenhydramine 25–50 mg PO is the alternative. Epinephrine is for airway, breathing, or circulation involvement."},
+{q:"How long is she observed, and can she drive?",o:["No observation needed","30 minutes with vitals every 15 minutes; she may drive if not drowsy","2 hours; she needs a driver regardless","30 minutes; she needs a driver regardless"],c:1,
+fb:"After an antihistamine: 30 minutes, vitals (SpO₂, pulse, BP) every 15 minutes, IV kept in until discharge. After cetirizine with no drowsiness she may drive herself. Had she received diphenhydramine she would need a driver."},
+{q:"What must happen before she leaves?",o:["A verbal warning is enough","Reaction card naming the agent and severity, discharge instructions, notify the referring office and reading radiologist, incident report","Start a prednisone taper","Allergy skin testing on site"],c:1,
+fb:"Naming the specific agent in the record is what makes switching agents possible next time. Allergy referral is recommended after moderate or severe reactions."}]},
+
+{cat:"Contrast",title:"Scheduling Call: Prior Contrast Reaction",
+vit:{Exam:"CT A/P",Prior:"2021",Agent:"Iohexol",Other:"61 y M; prior reaction was a few forearm hives that resolved untreated"},
+stem:"A 61-year-old is being scheduled for an outpatient contrast-enhanced CT. In 2021 he had a few itchy hives on his forearm after iohexol that resolved without treatment. His referring office asks whether he needs the 13-hour prednisone prep.",
+q:[{q:"Best plan?",o:["Prednisone 50 mg at 13, 7, and 1 h plus diphenhydramine","Scan as an outpatient with an agent other than iohexol; no premedication needed","Send him to a hospital location","Cancel the contrast"],c:1,
+fb:"A mild prior reaction no longer gets steroid premedication. With the inciting agent known, switching agents is the recommended step and no premedication is necessary. In the largest series, breakthrough reactions ran about 25% with the same agent (with or without steroids) versus 3–6% after a switch. The technologist alerts the supervising physician before injecting."},
+{q:"A different agent is not available at that center. Options now?",o:["A steroid prep becomes mandatory","No premedication, or cetirizine 10 mg PO one hour before the exam","Diphenhydramine 50 mg IV on arrival","Refer to the hospital"],c:1,
+fb:"For a mild prior reaction the two options are no premedication, or cetirizine 10 mg PO one hour before. Either can be done at the outpatient center."},
+{q:"Suppose instead his prior reaction was wheezing and facial swelling treated with epinephrine. Where is he scanned?",o:["Outpatient center with cetirizine","Outpatient center with a steroid prep","Hospital location","Outpatient center with a different agent"],c:2,
+fb:"A moderate or severe prior reaction is scanned at a hospital location. For severe reactions the consensus is to consider alternative imaging first; if contrast is needed, premedicate and switch agents, with a rapid response team available."},
+{q:"Which history calls for NO precaution at all?",o:["Prior laryngeal edema after contrast","Shellfish allergy","Prior diffuse hives after contrast","Prior hypotension needing epinephrine after contrast"],c:1,
+fb:"Shellfish allergy, iodine allergy, and povidone-iodine reactions do not raise contrast reaction risk. Iodine is not an allergen; shellfish allergy is a response to tropomyosin."}]},
+
+{cat:"Contrast",title:"Pregnant Patient, MRI Ordered With Contrast",
+vit:{GA:"22 wk",Exam:"MRI brain",Order:"w/ + w/o",Other:"31 y F, outpatient center, new headaches"},
+stem:"A 31-year-old at 22 weeks' gestation arrives at an outpatient center for an MRI brain ordered with and without contrast for new headaches. The screening form flags the pregnancy.",
+q:[{q:"What happens to the gadolinium?",o:["Give it; Group II agents are safe in pregnancy","It is not given at the outpatient center; the technologist notifies the supervising physician","Give a half dose","Give it once she signs a consent form"],c:1,
+fb:"Outpatient facilities do not give gadolinium-based contrast to pregnant patients. Gadolinium crosses the placenta and can accumulate in amniotic fluid. The technologist notifies the supervising physician, who confers with the ordering physician."},
+{q:"The ordering neurologist says contrast is essential and no alternative study will answer the question. Next?",o:["Proceed at the outpatient center with the neurologist's approval","Scan at a hospital location","Postpone until after delivery","Substitute contrast-enhanced CT"],c:1,
+fb:"If the exam is so strongly indicated that contrast must be given, it is done at a hospital location, not the outpatient center."},
+{q:"A different pregnant patient needs a CT pulmonary angiogram for suspected PE. Iodinated contrast?",o:["Withhold it","Do not withhold when needed for diagnosis; perform as ordered","Give only after a 13-hour steroid prep","Use gadolinium instead"],c:1,
+fb:"Iodinated contrast is not withheld in pregnancy when it is needed for diagnosis and the ordering provider, aware of the pregnancy, judges the exam necessary."}]},
 
 {cat:"Sedation",title:"Apnea During Moderate Sedation",
 vit:{HR:"96",BP:"104/62",SpO2:"82% ↓",RR:"0",MOAAS:"1",Other:"Midazolam 4 mg + fentanyl 150 mcg given"},
@@ -694,17 +907,28 @@ const FC=[
 ["ATLS","Massive transfusion ratio?","Balanced 1:1:1 plasma : platelets : RBCs; monitor calcium and temperature."],
 ["ATLS","Unstable + positive FAST → ?","Operating room. CT only for hemodynamically stable patients."],
 ["ATLS","Lethal triad of trauma?","Hypothermia + acidosis + coagulopathy."],
-["Contrast","Most contrast reactions occur within…?","20 minutes of injection — keep IV access and observe high-risk patients."],
-["Contrast","First-line drug for laryngeal edema?","Epinephrine — IM 0.3 mL of 1 mg/mL (0.3 mg), repeat q5–15 min. NOT antihistamines."],
-["Contrast","Epinephrine IM vs IV in contrast reactions?","IM (lateral thigh) 0.3 mg of 1 mg/mL preferred. IV only dilute (0.1 mg/mL), 1–3 mL slowly, with monitoring. Max ~1 mg total."],
-["Contrast","Hypotension + bradycardia after contrast = ? Treatment?","Vasovagal: legs up, O₂, IV fluids; atropine 0.6–1 mg IV (to 3 mg) if persistent."],
-["Contrast","Hypotension + tachycardia after contrast = ? Treatment?","Anaphylactoid: rapid IV fluids + epinephrine; O₂; escalate early."],
-["Contrast","Bronchospasm treatment ladder?","O₂ + albuterol 2 puffs (repeat) → epinephrine IM 0.3 mg if hypoxic/refractory."],
-["Contrast","Standard oral premedication regimen?","Prednisone 50 mg PO at 13, 7, and 1 h pre-contrast + diphenhydramine 50 mg 1 h prior."],
-["Contrast","Accelerated IV premedication?","Methylprednisolone 40 mg IV (or hydrocortisone 200 mg IV) q4h until the study + diphenhydramine 50 mg IV 1 h prior; steroid ideally ≥4–5 h before."],
-["Contrast","Extravasation: when to call surgery?","Progressive swelling/pain, blistering or ulceration, decreased perfusion, worsening paresthesias — compartment syndrome concern."],
-["Contrast","Metformin rule with iodinated contrast?","eGFR ≥30 and no AKI: continue. eGFR <30 or AKI: hold 48 h and recheck renal function."],
-["Contrast","Mild urticaria management?","Usually observation only; if symptomatic, diphenhydramine 25–50 mg (sedating — no driving) or fexofenadine 180 mg PO."],
+["Contrast","Most contrast reactions occur within…?","20 minutes of injection; “immediate” means within 1 hour. Keep the IV in until discharge."],
+["Contrast","First-line drug for laryngeal edema?","Epinephrine. Outpatient: EpiPen 0.3 mg IM, anterolateral thigh, repeat every 5–15 min up to 3 times, and call 911. Antihistamines do not treat the airway."],
+["Contrast","Epinephrine at an outpatient center: which form?","Auto-injector only (EpiPen 0.3 mg). No ampules or prefilled syringes on the cart, so nothing to titrate and no cardiac monitoring needed. Call 911 any time it is used."],
+["Contrast","Hypotension + bradycardia after contrast = ? Treatment?","Vasovagal: legs up at least 60°, O₂, 1,000 mL fluids. Still symptomatic: atropine 0.6–1 mg IV (to 3 mg) and call 911."],
+["Contrast","Hypotension + tachycardia after contrast = ? Treatment?","Anaphylactoid: O₂, legs up, 1,000 mL fluids rapidly. If hypotension persists: EpiPen 0.3 mg IM and call 911."],
+["Contrast","Bronchospasm treatment ladder?","O₂ + albuterol 2 puffs (up to 3 times). Moderate: consider EpiPen + 911. Severe: EpiPen + 911, plus albuterol."],
+["Contrast","Prior MILD contrast reaction: outpatient premedication protocol?","Offer an alternative agent if the inciting agent is known; no premedication is necessary. Or cetirizine (Zyrtec) 10 mg PO 1 hour before the exam. No steroids."],
+["Contrast","Prior MODERATE or SEVERE contrast reaction: where is the patient scanned?","A hospital location. For severe: consider alternative imaging first; if contrast is needed, premedicate and switch agents with a rapid response team available."],
+["Contrast","Extravasation: first steps and when to escalate?","Stop, notify the supervising physician, compress (warm or cold), elevate above the heart, mark the area. Escalate for progressive pain or swelling, blistering, perfusion change, or numbness."],
+["Contrast","Metformin rule with iodinated contrast?","Category 1 (no AKI, eGFR ≥30): continue. Category 2 (AKI or eGFR <30): stop at or before the procedure, hold 48 h, restart once renal function is confirmed stable. Never needed for gadolinium."],
+["Contrast","Mild urticaria management?","Often none. If symptomatic: cetirizine (Zyrtec) 10 mg PO first line; diphenhydramine 25–50 mg PO is the alternative."],
+["Contrast","Why cetirizine over diphenhydramine for hives?","Similar efficacy and onset with much less sedation (about 10–14% mild somnolence), so a patient who is not drowsy can drive home. Diphenhydramine requires a driver."],
+["Contrast","Observation after an antihistamine for a contrast reaction?","30 minutes, with vitals (SpO₂, pulse, BP) every 15 minutes. IV stays in until discharge."],
+["Contrast","Gadolinium and pregnancy: company stance?","Outpatient facilities do not give gadolinium to pregnant patients. If contrast must be given, the patient is scanned at a hospital location."],
+["Contrast","Iodinated contrast in pregnancy?","Do not withhold when it is needed for diagnosis and the ordering provider, aware of the pregnancy, judges the exam necessary."],
+["Contrast","Does shellfish or iodine allergy need premedication?","No. Neither raises contrast reaction risk, and iodine is not an allergen. Prior physiologic reactions (nausea, warmth, vasovagal) do not need it either."],
+["Contrast","Switching agents vs steroid premedication: the numbers?","Same agent: about 25% breakthrough with or without steroids. Different agent: 3–6%. Meta-analysis: 61% fewer breakthrough reactions after switching."],
+["Contrast","Disposition after suspected contrast anaphylaxis?","Emergency department. Biphasic anaphylaxis occurs in about 10%, up to 72 h later (mean 11 h)."],
+["Contrast","Who needs a creatinine before iodinated contrast?","Only patients with a risk factor (diabetes, renal disease, dialysis, renal cancer/surgery/transplant, metformin) and no value within 30 days. eGFR <30 is higher risk, not an absolute contraindication."],
+["Contrast","Gadolinium and kidney function?","Group II agents only. At standard doses, no renal questionnaire or lab testing is required."],
+["Contrast","Fasting before IV contrast?","Not required for iodinated or gadolinium contrast. Exceptions: CT/MR enterography, sedation or anesthesia."],
+["Contrast","Dialysis patient getting contrast: when is dialysis?","Routine schedule; dialysis within 24 h is not required. A dialysis patient who still makes urine is treated like eGFR <30."],
 ["Sedation","Define moderate sedation.","Purposeful response to verbal or light tactile stimulation; airway and ventilation adequate without intervention; cardiovascular function maintained."],
 ["Sedation","NPO guidelines?","Clear liquids 2 h · light meal 6 h · fatty/fried meal 8 h."],
 ["Sedation","Midazolam adult dosing?","0.5–2 mg IV slowly, titrate q2–5 min; typical total 2–5 mg; start 0.5 mg in elderly; reduce with opioids."],
@@ -741,12 +965,12 @@ function render(){
 function renderLearn(){
   const k=state.learnTopic;
   if(!k){
-    app.innerHTML=`<div class="brand"><span class="dot"></span><h1>CodeReady</h1></div>
-    <div class="sub">Emergency protocols for the radiology suite — study, drill, and reference.</div>
+    app.innerHTML=`<div class="hero"><div class="brand"><div class="eyebrow">Emergency protocols</div><h1>CodeReady</h1></div>
+    <div class="sub">Study, drill, and reference for the imaging suite.</div></div>
     <div class="grid">${Object.entries(LEARN).map(([id,t])=>
-      `<button class="tile" data-id="${id}"><span class="tag ${t.tag}">${t.name}</span><b>${t.name==="Contrast Reactions"?"ACR Contrast":t.name}</b><span>${t.blurb}</span></button>`).join("")}
+      `<button class="tile" data-id="${id}"><span class="tag ${t.tag}">${t.name}</span><b>${t.name==="Contrast Reactions"?"Contrast Safety":t.name}</b><span>${t.blurb}</span></button>`).join("")}
     </div>
-    <footer class="note">Educational reference for licensed clinicians, synthesized from AHA 2020 ACLS/PALS guidelines, ATLS 10th edition, the ACR Manual on Contrast Media, and ASA moderate sedation guidance. Verify against current institutional protocols; this app does not replace certification or clinical judgment.</footer>`;
+    <footer class="note">Educational reference for licensed clinicians. Sources: AHA 2020 ACLS/PALS, ATLS 10th edition, ASA moderate sedation guidance, the 2026 Imaging Contrast Manual, and the ACR/AAAAI consensus statement on contrast hypersensitivity (Wang et al., Radiology 2025). Verify against current institutional policy; this does not replace certification or clinical judgment.<br><br><b>Unofficial.</b> A personal project whose visual styling is inspired by Lumexa Imaging. It is not an official Lumexa Imaging product and is not endorsed by the company.</footer>`;
     app.querySelectorAll(".tile").forEach(b=>b.addEventListener("click",()=>{state.learnTopic=b.dataset.id;state.learnSec=null;render();window.scrollTo(0,0)}));
     return;
   }
@@ -798,7 +1022,7 @@ function renderTrain(){
     const pct=Math.round(100*sc.score/s.q.length);
     app.innerHTML=`<button class="back" id="bk">‹ Scenarios</button>
     <div class="card" style="text-align:center;padding:28px">
-    <div style="font-size:44px;font-weight:800;color:${pct>=80?"var(--green)":pct>=50?"var(--amber)":"var(--red)"}">${pct}%</div>
+    <div class="score" style="color:${pct>=80?"var(--green)":pct>=50?"var(--amber)":"var(--red)"}">${pct}%</div>
     <p><b>${s.title}</b></p><p class="sub">${sc.score} of ${s.q.length} first-attempt decisions correct</p>
     <button class="btn primary" id="again">Replay scenario</button>
     <button class="btn ghost" id="next">Next random scenario</button></div>`;
@@ -814,7 +1038,7 @@ function renderTrain(){
   <div class="card"><p>${s.stem}</p>
   <div class="vitals">${Object.entries(s.vit).filter(([k])=>k!=="Other").map(([k,v])=>`<div class="vt"><b>${v}</b><span>${k}</span></div>`).join("")}</div>
   ${s.vit.Other?`<p class="sub" style="margin:4px 0 0">${s.vit.Other}</p>`:""}</div>
-  <h3>Decision ${sc.qi+1} of ${s.q.length}: ${q.q}</h3>
+  <div class="eyebrow">Decision ${sc.qi+1} of ${s.q.length}</div><p class="qtext">${q.q}</p>
   <div id="opts">${q.o.map((o,i)=>`<button class="opt" data-i="${i}">${o}</button>`).join("")}</div>
   <div id="fb"></div>`;
   $("#bk").addEventListener("click",()=>{sc.active=null;render()});
@@ -867,12 +1091,12 @@ function renderQuick(qrId){
   const inner=qrId?(()=>{const p=proto;
     return `<button class="em-close" id="bk" style="margin-bottom:8px">‹ All protocols</button>
     <div class="em-title" style="margin-bottom:2px">${p.name}</div>
-    <div style="color:#E8AFAF;font-size:13.5px;margin-bottom:10px">${p.sub}</div>
+    <div class="em-sub">${p.sub}</div>
     ${p.wt?wtBar():""}
     <div class="em-card"><h3>Protocol</h3>${p.steps().map((s,i)=>`<div class="em-step"><span class="n">${i+1}</span><span>${s}</span></div>`).join("")}</div>
-    <p style="font-size:11.5px;color:#C98F8F;margin-top:14px">Reference aid only — follow institutional protocols and clinical judgment.</p>`})()
-  :`<div class="em-head"><div class="em-title">⚡ QUICK REFERENCE</div><button class="em-close" id="bk">Exit</button></div>
-    <div style="color:#E8AFAF;font-size:13.5px;margin-bottom:6px">Tap the scenario in front of you.</div>
+    <p class="em-note">Reference aid only. Follow institutional protocols and clinical judgment. Unofficial; not endorsed by Lumexa Imaging.</p>`})()
+  :`<div class="em-head"><div class="em-title">Quick Reference</div><button class="em-close" id="bk">Exit</button></div>
+    <div class="em-sub">Tap the scenario in front of you.</div>
     ${wtBar()}
     ${QR.map(p=>`<button class="em-btn" data-id="${p.id}">${p.name}<small>${p.sub}</small></button>`).join("")}`;
   app.innerHTML="";
@@ -901,14 +1125,14 @@ function renderNIHSS(){
   w.innerHTML=`<div class="inner">
   <button class="em-close" id="bk" style="margin-bottom:8px">‹ All protocols</button>
   <div class="em-title">NIHSS Calculator</div>
-  <div style="color:#E8AFAF;font-size:13px;margin:2px 0 8px">Tap the finding for each item. Score totals live below.</div>
+  <div class="em-sub">Tap the finding for each item. Score totals live below.</div>
   <div class="nih-score" id="scorebar"></div>
   ${NIHSS.map((it,i)=>`<div class="em-card" style="padding:12px"><h3 style="margin-bottom:6px">${it.n}</h3>
     <div class="nih-opts" data-item="${i}">
     ${it.o.map((o,j)=>`<button class="nih-opt" data-i="${i}" data-v="${j}">${o}</button>`).join("")}
     </div></div>`).join("")}
-  <button class="em-btn" id="reset" style="text-align:center;background:#52191F">Reset all items</button>
-  <p style="font-size:11.5px;color:#C98F8F;margin-top:10px">Severity bands: 0 none · 1–4 minor · 5–15 moderate · 16–20 moderate–severe · 21–42 severe. Untested/amputation items: score 0 here and document per NIHSS rules.</p>
+  <button class="em-btn center" id="reset">Reset all items</button>
+  <p class="em-note">Severity bands: 0 none · 1–4 minor · 5–15 moderate · 16–20 moderate–severe · 21–42 severe. Untested/amputation items: score 0 here and document per NIHSS rules.</p>
   </div>`;
   w.scrollTop=0;
   const upd=()=>{

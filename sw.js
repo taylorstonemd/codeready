@@ -1,5 +1,5 @@
 // CodeReady service worker — caches the app for full offline use
-const CACHE = "codeready-v3";
+const CACHE = "codeready-v4";
 const ASSETS = ["./", "./index.html", "./manifest.json"];
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(ASSETS)).then(() => self.skipWaiting()));
